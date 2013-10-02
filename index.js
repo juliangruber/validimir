@@ -24,7 +24,7 @@ methods.forEach(function(m) {
 function V(m, args) {
   var optional = false;
 
-  var check = '';
+  var check = '(function(){';
 
   function v(arg) {
     if (arg === undefined) {
@@ -35,7 +35,7 @@ function V(m, args) {
       }
     }
 
-    new Function('arg', 'Buffer', check)(arg, Buffer);
+    new Function('arg', 'Buffer', check + '})();')(arg, Buffer);
   }
 
   v.optional = function() {
