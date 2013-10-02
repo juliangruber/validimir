@@ -1,5 +1,3 @@
-var Buffer = require('buffer'); // be nice to browserify
-
 var methods = [
   'optional',
   'string',
@@ -37,7 +35,7 @@ function V(m, args) {
       }
     }
 
-    new Function('arg', check)(arg);
+    new Function('arg', 'Buffer', check)(arg, Buffer);
   }
 
   v.optional = function() {
