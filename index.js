@@ -24,7 +24,6 @@ methods.forEach(function(m) {
 function V(m, args) {
   var optional = false;
 
-  var check = '(function(){';
 
   function v(arg) {
     if (arg === undefined) {
@@ -35,8 +34,10 @@ function V(m, args) {
       }
     }
 
-    new Function('arg', 'Buffer', check + '})();')(arg, Buffer);
+    new Function('arg', 'Buffer', v.src + '})();')(arg, Buffer);
   }
+
+  v.src  = '(function(){';
 
   v.optional = function() {
     optional = true;
@@ -44,61 +45,61 @@ function V(m, args) {
   };
 
   v.string = function() {
-    check +=
+    v.src +=
       'if (typeof arg != "string") throw new Error("string required")\n';
     return this;
   }
 
   v.number = function() {
-    check +=
+    v.src +=
       'if (typeof arg != "number") throw new Error("number required")\n';
     return this;
   };
 
   v.boolean = function() {
-    check +=
+    v.src +=
       'if (typeof arg != "boolean") throw new Error("boolean required")\n';
     return this;
   };
 
   v.object = function() {
-    check +=
+    v.src +=
       'if (typeof arg != "object" || arg == null) '+
       'throw new Error("object required")\n';
     return this;
   };
 
   v.array = function() {
-    check +=
+    v.src +=
       'if (!Array.isArray(arg)) throw new Error("array required")\n';
     return this;
   };
 
   v.buffer = function() {
-    check +=
+    v.src +=
       'if (!(arg instanceof Buffer)) throw new Error("buffer required")\n';
     return this;
   };
 
   v.len = function(len) {
     if (typeof len == 'number') {
-      check +=
+      v.src +=
         'if (arg.length != ' + len + ') throw new Error("wrong length")\n';
     } else {
       if (len.gt) {
-        check +=
+        v.src +=
           'if (arg.length <= ' + len.gt + ') throw new Error("too short")\n';
       }
       if (len.gte) {
-        check +=
+        v.src +=
           'if (arg.length < ' + len.gte + ') throw new Error("too short")\n';
       }
       if (len.lt) {
-        check +=
+        v.src +=
           'if (arg.length >= ' + len.lt + ') throw new Error("too long")\n';
       }
       if (len.lte) {
-        check +=
+        v.src +=
           'if (arg.length > ' + len.lte + ') throw new Error("too long")\n';
       }
     }
@@ -107,27 +108,27 @@ function V(m, args) {
 
   v.equal = function(val) {
     if (typeof val != 'object') {
-      check +=
+      v.src +=
         'if (arg !== ' + JSON.stringify(val) + ') '+
         'throw new Error("not equal")\n';
     } else {
       if (val.gt) {
-        check +=
+        v.src +=
           'if (arg <= ' + JSON.stringify(val.gt) + ') '+
           'throw new Error("too low")\n';
       }
       if (val.gte) {
-        check +=
+        v.src +=
           'if (arg < ' + JSON.stringify(val.gte) + ') '+
           'throw new Error("too low")\n';
       }
       if (val.lt) {
-        check +=
+        v.src +=
           'if (arg >= ' + JSON.stringify(val.lt) + ') '+
           'throw new Error("too high")\n';
       }
       if (val.lte) {
-        check +=
+        v.src +=
           'if (arg > ' + JSON.stringify(val.lte) + ') '+
           'throw new Error("too high")\n';
       }
@@ -137,7 +138,7 @@ function V(m, args) {
 
   v.notEqual = function(val) {
     if (typeof val != 'object') {
-      check +=
+      v.src +=
         'if (arg === ' + JSON.stringify(val) + ') throw new Error("equal")\n';
     } else {
       var segs = [];
@@ -160,39 +161,39 @@ function V(m, args) {
         || 'gt' in val && 'lte' in val
         || 'gte' in val && 'lt' in val
         || 'gte' in val && 'lte' in val) {
-        check += 'if (' + cond + ') throw new Error("not equal")\n';
+        v.src += 'if (' + cond + ') throw new Error("not equal")\n';
       } else if ('gt' in val || 'gte' in val) {
-        check += 'if (' + cond + ') throw new Error("too high")\n';
+        v.src += 'if (' + cond + ') throw new Error("too high")\n';
       } else {
-        check += 'if (' + cond + ') throw new Error("too low")\n';
+        v.src += 'if (' + cond + ') throw new Error("too low")\n';
       }
     }
     return this;
   };
 
   v.match = function(reg) {
-    check +=
+    v.src +=
       'if (!' + reg.toString() + '.test(arg)) '+
       'throw new Error("doesn\'t match")\n';
     return this;
   };
 
   v.notMatch = function(reg) {
-    check +=
+    v.src +=
       'if (' + reg.toString() + '.test(arg)) '+
       'throw new Error("does match")\n';
     return this;
   };
 
   v.hasKey = function(key) {
-    check +=
+    v.src +=
       'if (!(' + JSON.stringify(key) + ' in arg)) '+
       'throw new Error("doesn\'t have key")\n';
     return this;
   };
 
   v.of = function(arr) {
-    check +=
+    v.src +=
       'if (' + JSON.stringify(arr) + '.indexOf(arg) == -1) '+
       'throw new Error("not in array")\n'
     return this;
