@@ -7,6 +7,25 @@ Create validation functions.
 
 [![testling badge](https://ci.testling.com/juliangruber/validly.png)](https://ci.testling.com/juliangruber/validly)
 
+Idea:
+
+* compile validation functions once, run them on every request
+* handle string ranges, so works well with LevelDBs
+* fluent api, so it's flexible but pleasant
+* on error, throw
+
+This is the error output from
+
+```js
+v.equal({ gt: 3 })(2);
+```
+
+```bash
+if (arg <= 3) throw new Error("too low")
+                    ^
+Error: too low
+```
+
 ## Usage
 
 ```js
