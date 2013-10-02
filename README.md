@@ -12,6 +12,11 @@ Idea:
 * compile validation functions once, run them on every request
 * handle string ranges, so works well with LevelDBs
 * fluent api, so it's flexible and pleasant
+
+```js
+v.len(3).match(/^foo$/).notEqual('bar').string()('foo');
+```
+
 * on error, throw
 
 This is the error output from
@@ -128,6 +133,14 @@ test('len', function(t) {
 test('of', function(t) {
   v.of(['foo', 'bar'])('foo');
   t.throws(function() { v.of(['foo'])('bar') });
+  t.end();
+});
+
+test('integration', function(t) {
+  v.of(['foo']).len(3).match(/^foo$/)
+  .notEqual('bar').equal('foo').string()('foo');
+
+  t.ok(true);
   t.end();
 });
 ```

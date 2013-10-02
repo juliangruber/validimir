@@ -101,3 +101,10 @@ test('of', function(t) {
   t.end();
 });
 
+test('integration', function(t) {
+  v.of(['foo']).len(3).match(/^foo$/)
+  .notEqual('bar').equal('foo').string()('foo');
+
+  t.ok(true);
+  t.end();
+});
