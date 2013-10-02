@@ -1,3 +1,5 @@
+var Buffer = require('buffer'); // be nice to browserify
+
 var methods = [
   'optional',
   'string',
