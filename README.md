@@ -7,7 +7,7 @@ Create validation functions.
 
 [![testling badge](https://ci.testling.com/juliangruber/validly.png)](https://ci.testling.com/juliangruber/validly)
 
-Idea:
+## Idea
 
 * compile validation functions once, run them on every request
 * handle string ranges, so works well with LevelDBs
