@@ -5,6 +5,8 @@ Create validation functions.
 
 [![build status](https://secure.travis-ci.org/juliangruber/validly.png)](http://travis-ci.org/juliangruber/validly)
 
+[![testling badge](https://ci.testling.com/juliangruber/validly.png)](https://ci.testling.com/juliangruber/validly)
+
 ## Usage
 
 ```js
