@@ -3,6 +3,8 @@
 
 Create validation functions.
 
+[![build status](https://secure.travis-ci.org/juliangruber/validly.png)](http://travis-ci.org/juliangruber/validly)
+
 ## Usage
 
 ```js
