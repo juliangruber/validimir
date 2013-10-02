@@ -11,7 +11,7 @@ Idea:
 
 * compile validation functions once, run them on every request
 * handle string ranges, so works well with LevelDBs
-* fluent api, so it's flexible but pleasant
+* fluent api, so it's flexible and pleasant
 * on error, throw
 
 This is the error output from
