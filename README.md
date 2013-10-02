@@ -11,6 +11,9 @@ Idea:
 
 * compile validation functions once, run them on every request
 * handle string ranges, so works well with LevelDBs
+
+v.equal({ gte: 'post!', lte: 'post!~' })('post!1337');
+
 * fluent api, so it's flexible and pleasant
 
 ```js
