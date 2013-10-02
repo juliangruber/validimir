@@ -1,0 +1,29 @@
+{
+  "name": "validly",
+  "description": "Create validation functions.",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/juliangruber/validly.git"
+  },
+  "homepage": "https://github.com/juliangruber/validly",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~1.1.1"
+  },
+  "keywords": [
+    "curry",
+    "validate",
+    "validation"
+  ],
+  "author": {
+    "name": "Julian Gruber",
+    "email": "mail@juliangruber.com",
+    "url": "http://juliangruber.com"
+  },
+  "license": "MIT"
+}
