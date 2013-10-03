@@ -36,6 +36,12 @@ function V(m, args) {
     return str;
   };
 
+  v.index = function() {
+    var str = new String('i');
+    str._raw = true;
+    return str;
+  };
+
   v.optional = c(function() {
     src.optional = 'if (typeof arg == "undefined") return';
   });
