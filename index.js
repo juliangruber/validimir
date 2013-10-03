@@ -6,6 +6,10 @@ methods.forEach(function(m) {
   }
 });
 
+exports.putin = function(key, value, cb) {
+  cb(new Error('in node, error throws you!'));
+};
+
 function V(m, args) {
   var optional = false;
   
