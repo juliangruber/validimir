@@ -55,8 +55,19 @@ function V(m, args) {
   });
 
   v.each = c(function(validate) {
-    check('for (var i = 0; i < arg.length; i++) {'
-      + 'with({arg:arg[i]}) {' + validate.src() + '}}');
+    var exec = 'with({arg:arg[i]}) {' + validate.src() + '}';
+
+    check('if (Array.isArray(arg)) {'+
+      'for (var i = 0; i < arg.length; i++) {'+
+        exec+
+      '}'+
+    '} else {'+
+      'var keys = Object.keys(arg);'+
+      'for (var j = 0; j < keys.length; j++) {'+
+        'var i = keys[j];'+
+        exec+
+      '}'+
+    '}');
   });
 
   v.string = c(function() {
