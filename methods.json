@@ -14,5 +14,7 @@
   "hasKey",
   "of",
   "rules",
-  "value"
+  "value",
+  "each",
+  "index"
 ]
