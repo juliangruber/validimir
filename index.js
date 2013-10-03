@@ -48,6 +48,11 @@ function V(m, args) {
     });
   });
 
+  v.each = c(function(validate) {
+    check('for (var i = 0; i < arg.length; i++) {'
+      + 'with({arg:arg[i]}) {' + validate.src() + '}}');
+  });
+
   v.string = c(function() {
     check(
       'if (typeof arg != "string") throw new Error("string required")'

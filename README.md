@@ -182,6 +182,15 @@ test('value', function(t) {
 
   t.end();
 });
+
+test('each', function(t) {
+  var validate = v.each(v.string());
+
+  validate(['foo', 'bar']);
+  t.throws(function() { validate(['foo', 13]) });
+
+  t.end();
+});
 ```
 
 ## Installation
