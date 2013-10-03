@@ -1,20 +1,4 @@
-var methods = [
-  'optional',
-  'string',
-  'number',
-  'boolean',
-  'object',
-  'array',
-  'buffer',
-  'len',
-  'equal',
-  'notEqual',
-  'match',
-  'notMatch',
-  'hasKey',
-  'of',
-  'rules'
-];
+var methods = require('./methods.json');
 
 methods.forEach(function(m) {
   exports[m] = function() {
