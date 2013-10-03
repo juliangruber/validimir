@@ -30,6 +30,12 @@ function V(m, args) {
     ].join('\n');
   };
 
+  v.value = function(path) {
+    var str = new String('orig.' + path);
+    str._raw = true;
+    return str;
+  };
+
   v.optional = c(function() {
     src.optional = 'if (typeof arg == "undefined") return';
   });
@@ -37,7 +43,7 @@ function V(m, args) {
   v.rules = c(function(rules) {
     Object.keys(rules).forEach(function(key) {
       var rule = rules[key];
-      var _src = 'with({arg:arg.' + key + '}) {' + rule.src() + '}';
+      var _src = 'with({arg:arg.' + key + ',orig:arg}) {' + rule.src() + '}';
       check(_src);
     });
   });
@@ -109,33 +115,33 @@ function V(m, args) {
   });
 
   v.equal = c(function(val) {
-    if (typeof val != 'object') {
+    if (typeof val != 'object' || val instanceof String) {
       check(
-        'if (arg !== ' + JSON.stringify(val) + ') '+
+        'if (arg !== ' + stringify(val) + ') '+
         'throw new Error("not equal")'
       );
     } else {
       if (val.gt) {
         check(
-          'if (arg <= ' + JSON.stringify(val.gt) + ') '+
+          'if (arg <= ' + stringify(val.gt) + ') '+
           'throw new Error("too low")'
         );
       }
       if (val.gte) {
         check(
-          'if (arg < ' + JSON.stringify(val.gte) + ') '+
+          'if (arg < ' + stringify(val.gte) + ') '+
           'throw new Error("too low")'
         );
       }
       if (val.lt) {
         check(
-          'if (arg >= ' + JSON.stringify(val.lt) + ') '+
+          'if (arg >= ' + stringify(val.lt) + ') '+
           'throw new Error("too high")'
         );
       }
       if (val.lte) {
         check(
-          'if (arg > ' + JSON.stringify(val.lte) + ') '+
+          'if (arg > ' + stringify(val.lte) + ') '+
           'throw new Error("too high")'
         );
       }
@@ -143,23 +149,23 @@ function V(m, args) {
   });
 
   v.notEqual = c(function(val) {
-    if (typeof val != 'object') {
+    if (typeof val != 'object' || val instanceof String) {
       check(
-        'if (arg === ' + JSON.stringify(val) + ') throw new Error("equal")'
+        'if (arg === ' + stringify(val) + ') throw new Error("equal")'
       );
     } else {
       var segs = [];
       if ('gt' in val) {
-        segs.push('arg > ' + JSON.stringify(val.gt));
+        segs.push('arg > ' + stringify(val.gt));
       }
       if ('gte' in val) {
-        segs.push('arg >= ' + JSON.stringify(val.gte));
+        segs.push('arg >= ' + stringify(val.gte));
       }
       if ('lt' in val) {
-        segs.push('arg < ' + JSON.stringify(val.lt));
+        segs.push('arg < ' + stringify(val.lt));
       }
       if ('lte' in val) {
-        segs.push('arg <= ' + JSON.stringify(val.lte));
+        segs.push('arg <= ' + stringify(val.lte));
       }
 
       var cond = segs.join(' && ');
@@ -194,7 +200,7 @@ function V(m, args) {
 
   v.hasKey = c(function(key) {
     check(
-      'if (!(' + JSON.stringify(key) + ' in arg)) '+
+      'if (!(' + stringify(key) + ' in arg)) '+
       'throw new Error("doesn\'t have key")'
     );
   });
@@ -206,9 +212,7 @@ function V(m, args) {
     );
   });
 
-  v[m].apply(null, args);
-
-  return v;
+  return v[m].apply(v, args);
 }
 
 function c(fn) {
@@ -216,4 +220,10 @@ function c(fn) {
     fn.apply(null, arguments);
     return this;
   }
+}
+
+function stringify(val) {
+  return val._raw
+    ? val
+    : JSON.stringify(val);
 }
