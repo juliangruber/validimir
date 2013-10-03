@@ -22,16 +22,28 @@ function V(m, args) {
   }
 
   v.src = function() {
-    return [
-      src.pre,
-      src.optional,
-      src.checks.join('\n'),
-      src.post
-    ].join('\n');
+    var segs = [src.pre, indent(src.checks.join('\n')), src.post];
+    if (src.optional.length) {
+      segs.splice(1, 0, indent(src.optional));
+    }
+    return segs.join('\n');
   };
 
   v.value = function(path) {
-    var str = new String('orig.' + path);
+    var pre;
+
+    if (/^\.\.\//.test(path)) {
+      pre = '';
+      while (/^\.\.\//.test(path)) {
+        pre += 'up.';
+        path = path.slice(3);
+      }
+      pre += 'value.';
+    } else {
+      pre = 'orig.';
+    }
+
+    var str = new String(pre + path);
     str._raw = true;
     return str;
   };
@@ -48,25 +60,31 @@ function V(m, args) {
 
   v.rules = c(function(rules) {
     Object.keys(rules).forEach(function(key) {
-      var rule = rules[key];
-      var _src = 'with({arg:arg.' + key + ',orig:arg}) {' + rule.src() + '}';
-      check(_src);
+      check('with({ '+
+        'arg: arg.' + key + ', '+
+        'orig: arg, '+
+        'up: typeof orig != "undefined" && { value: orig, up: typeof up != "undefined" && up } '+
+      '}) {\n' + indent(rules[key].src()) + '\n}');
     });
   });
 
   v.each = c(function(validate) {
-    var exec = 'with({arg:arg[i]}) {' + validate.src() + '}';
+    var exec = 'with({'+
+        'arg: arg[i], '+
+        'orig: arg, '+
+        'up: typeof orig != "undefined" && { value: orig, up: typeof up != "undefined" && up } '+
+      '}) {\n' + indent(validate.src()) + '\n}';
 
-    check('if (Array.isArray(arg)) {'+
-      'for (var i = 0; i < arg.length; i++) {'+
-        exec+
-      '}'+
-    '} else {'+
-      'var keys = Object.keys(arg);'+
-      'for (var j = 0; j < keys.length; j++) {'+
-        'var i = keys[j];'+
-        exec+
-      '}'+
+    check('if (Array.isArray(arg)) {\n'+
+      indent('for (var i = 0; i < arg.length; i++) {\n'+
+        indent(exec)+'\n'+
+      '}')+
+    '\n} else {\n'+
+      indent('var keys = Object.keys(arg);\n'+
+      'for (var j = 0; j < keys.length; j++) {\n'+
+        indent('var i = keys[j];\n'+
+        exec)+'\n'+
+      '}\n')+
     '}');
   });
 
@@ -249,4 +267,8 @@ function stringify(val) {
   return val._raw
     ? val
     : JSON.stringify(val);
+}
+
+function indent(str) {
+  return str.replace(/^/gm, '  ');
 }
