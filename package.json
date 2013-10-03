@@ -1,12 +1,12 @@
 {
-  "name": "validly",
+  "name": "validimir",
   "description": "Create validation functions.",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/juliangruber/validly.git"
+    "url": "git://github.com/juliangruber/validimir.git"
   },
-  "homepage": "https://github.com/juliangruber/validly",
+  "homepage": "https://github.com/juliangruber/validimir",
   "main": "index.js",
   "scripts": {
     "test": "tape test/*.js"

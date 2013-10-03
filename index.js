@@ -35,6 +35,10 @@ function V(m, args) {
     new Function('arg', 'Buffer', v.src())(arg, Buffer);
   }
 
+  v.rules = function(rules) {
+    return this;
+  };
+
   v.src = function() {
     return Object.keys(src).reduce(function(acc, key) {
       return acc += src[key];

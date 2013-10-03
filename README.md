@@ -1,11 +1,11 @@
 
-# validly
+# validimir
 
 Create validation functions.
 
-[![build status](https://secure.travis-ci.org/juliangruber/validly.png)](http://travis-ci.org/juliangruber/validly)
+[![build status](https://secure.travis-ci.org/juliangruber/validimir.png)](http://travis-ci.org/juliangruber/validimir)
 
-[![testling badge](https://ci.testling.com/juliangruber/validly.png)](https://ci.testling.com/juliangruber/validly)
+[![testling badge](https://ci.testling.com/juliangruber/validimir.png)](https://ci.testling.com/juliangruber/validimir)
 
 ## Idea
 
@@ -39,7 +39,7 @@ Error: too low
 ## Usage
 
 ```js
-var v = require('validly');
+var v = require('validimir');
 
 test('number', function(t) {
   v.number()(13);
@@ -155,7 +155,7 @@ test('integration', function(t) {
 With [npm](https://npmjs.org) do:
 
 ```bash
-npm install validly
+npm install validimir
 ```
 
 ## License
