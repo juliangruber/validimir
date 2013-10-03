@@ -48,6 +48,16 @@ test('equal', function(t) {
   v.equal({ lt: 7 })(6);
   v.equal({ lt: 'b' })('a');
 
+  var thrown = false;
+  try {
+    v.equal(1)(2);
+  } catch(e) {
+    thrown = true;
+    t.equal(e.message, 'not equal. expected: 1, is: 2');
+  } finally {
+    t.assert(thrown);
+  }
+
   t.throws(function() { v.equal('1')(1) });
   t.throws(function() { v.equal({ gt: 4 })(3) });
   t.throws(function() { v.equal({ gt: 'b' })('a') });

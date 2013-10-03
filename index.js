@@ -140,7 +140,8 @@ function V(m, args) {
     if (typeof val != 'object' || val instanceof String) {
       check(
         'if (arg !== ' + stringify(val) + ') '+
-        'throw new Error("not equal")'
+        'throw new Error("not equal. expected: " + '+
+          stringify(val) + ' + ", is: " + arg)'
       );
     } else {
       if (val.gt) {
