@@ -30,9 +30,9 @@
     "files": "test/*.js",
     "browsers": [
       "ie/8..latest",
-      "firefox/19..latest",
+      "firefox/20..latest",
       "firefox/nightly",
-      "chrome/24..latest",
+      "chrome/25..latest",
       "chrome/canary",
       "opera/12..latest",
       "opera/next",
