@@ -14,7 +14,7 @@ function V(m, args) {
   var optional = false;
   
   var src = {
-    pre: '(function(){',
+    pre: '(function(){\n  var key = \'\';',
     optional: '',
     checks: [],
     post: '})();'
