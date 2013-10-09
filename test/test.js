@@ -90,6 +90,8 @@ test('hasKey', function(t) {
 });
 
 test('len', function(t) {
+  t.plan(3);
+
   v.len(13)('aaaaaaaaaaaaa');
   v.len({ gt: 3 })('aaaaa');
   v.len({ lte: 10 })('aaaaa');
@@ -102,7 +104,16 @@ test('len', function(t) {
     v.len({ gt: 3, lte: 10 })('a');
   });
 
-  t.end();
+  try {
+    var fn = v.rules({
+      'title': v.len({ gte: 3 })
+    });
+    console.log(fn.src())
+    fn({ title: 'a' });
+  } catch(err) {
+    t.ok(err);
+    t.equal(err.message, 'title too short');
+  }
 });
 
 test('of', function(t) {
