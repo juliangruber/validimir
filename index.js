@@ -67,6 +67,7 @@ function V(m, args) {
       check('with({ '+
         'arg: arg.' + key + ', '+
         'orig: arg, '+
+        'key: ' + stringify(key) + ', '+
         'up: typeof orig != "undefined" && { value: orig, up: typeof up != "undefined" && up } '+
       '}) {\n' + indent(rules[key].src()) + '\n}');
     });
