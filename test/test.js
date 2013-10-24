@@ -73,13 +73,31 @@ test('notEqual', function(t) {
 
 test('match', function(t) {
   v.match(/foo/)('foo');
-  t.throws(function() { v.match(/foo/)('f') });
+
+  var threw = false;
+  try {
+    v.match(/foo/)('f');
+  } catch(err) {
+    threw = true;
+    t.equal(err.message, 'doesn\'t match (is f)');
+  }
+
+  t.ok(threw);
   t.end();
 });
 
 test('notMatch', function(t) {
   v.notMatch(/foo/)('f');
-  t.throws(function() { v.notMatch(/foo/)('foo') });
+
+  var threw = false;
+  try {
+    v.notMatch(/foo/)('foo');
+  } catch(err) {
+    threw = true;
+    t.equal(err.message, 'does match (is foo)');
+  }
+
+  t.ok(threw);
   t.end();
 });
 

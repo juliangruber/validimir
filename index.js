@@ -235,14 +235,14 @@ function V(m, args) {
   v.match = c(function(reg) {
     check(
       'if (!' + reg.toString() + '.test(arg)) '+
-      'throw new Error(' + _key + ' + "doesn\'t match")'
+      'throw new Error(' + _key + ' + "doesn\'t match (is " + arg + ")")'
     );
   });
 
   v.notMatch = c(function(reg) {
     check(
       'if (' + reg.toString() + '.test(arg)) '+
-      'throw new Error(' + _key + ' + "does match")'
+      'throw new Error(' + _key + ' + "does match (is " + arg + ")")'
     );
   });
 
