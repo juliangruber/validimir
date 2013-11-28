@@ -13,6 +13,7 @@
   "notMatch",
   "hasKey",
   "of",
+  "notOf",
   "rules",
   "value",
   "each",

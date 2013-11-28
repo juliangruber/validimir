@@ -260,6 +260,13 @@ function V(m, args) {
     );
   });
 
+  v.notOf = c(function(arr) {
+    check(
+      'if (' + JSON.stringify(arr) + '.indexOf(arg) > -1) '+
+      'throw new Error(' + _key + ' + " in array")'
+    );
+  });
+
   return v[m].apply(v, args);
 }
 

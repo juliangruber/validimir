@@ -140,6 +140,12 @@ test('of', function(t) {
   t.end();
 });
 
+test('notOf', function(t) {
+  v.notOf(['foo', 'bar'])('baz');
+  t.throws(function() { v.notOf(['foo'])('foo') });
+  t.end();
+});
+
 test('integration', function(t) {
   v.of(['foo']).len(3).match(/^foo$/)
   .notEqual('bar').equal('foo').string()('foo');
