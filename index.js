@@ -1,4 +1,6 @@
 var methods = require('./methods.json');
+var ltgt = require('ltgt');
+var quote = require('quote-unquote').quote;
 
 methods.forEach(function(m) {
   exports[m] = function() {
@@ -24,7 +26,7 @@ function V(m, args) {
   var check = src.checks.push.bind(src.checks);
 
   function v(arg) {
-    new Function('arg', 'Buffer', v.src())(arg, Buffer);
+    new Function('arg', 'Buffer', 'ltgt', v.src())(arg, Buffer, ltgt);
   }
 
   v.src = function() {
@@ -138,26 +140,9 @@ function V(m, args) {
         'if (arg.length != ' + len + ') throw new Error(' + _key + ' + "wrong length")'
       );
     } else {
-      if (len.gt) {
-        check(
-          'if (arg.length <= ' + len.gt + ') throw new Error(' + _key + ' + "too short")'
-        );
-      }
-      if (len.gte) {
-        check(
-          'if (arg.length < ' + len.gte + ') throw new Error(' + _key + ' + "too short")'
-        );
-      }
-      if (len.lt) {
-        check(
-          'if (arg.length >= ' + len.lt + ') throw new Error(' + _key + ' + "too long")'
-        );
-      }
-      if (len.lte) {
-        check(
-          'if (arg.length > ' + len.lte + ') throw new Error(' + _key + ' + "too long")'
-        );
-      }
+      check(
+        'if (!ltgt.contains(' + stringify(len) + ', arg.length)) throw new Error(' + _key + ' + "length not in range " + ' + quote(stringify(len)) + ')' 
+      );
     }
   });
 
@@ -169,30 +154,9 @@ function V(m, args) {
           stringify(val) + ' + ", is: " + arg)'
       );
     } else {
-      if (val.gt) {
-        check(
-          'if (arg <= ' + stringify(val.gt) + ') '+
-          'throw new Error(' + _key + ' + "too low")'
-        );
-      }
-      if (val.gte) {
-        check(
-          'if (arg < ' + stringify(val.gte) + ') '+
-          'throw new Error(' + _key + ' + "too low")'
-        );
-      }
-      if (val.lt) {
-        check(
-          'if (arg >= ' + stringify(val.lt) + ') '+
-          'throw new Error(' + _key + ' + "too high")'
-        );
-      }
-      if (val.lte) {
-        check(
-          'if (arg > ' + stringify(val.lte) + ') '+
-          'throw new Error(' + _key + ' + "too high")'
-        );
-      }
+      check(
+        'if (!ltgt.contains(' + stringify(val) + ', arg)) throw new Error(' + _key + ' + "not in range " + ' + quote(stringify(val)) + ')' 
+      );
     }
   });
 
@@ -202,33 +166,9 @@ function V(m, args) {
         'if (arg === ' + stringify(val) + ') throw new Error(' + _key + ' + "equal")'
       );
     } else {
-      var segs = [];
-      if ('gt' in val) {
-        segs.push('arg > ' + stringify(val.gt));
-      }
-      if ('gte' in val) {
-        segs.push('arg >= ' + stringify(val.gte));
-      }
-      if ('lt' in val) {
-        segs.push('arg < ' + stringify(val.lt));
-      }
-      if ('lte' in val) {
-        segs.push('arg <= ' + stringify(val.lte));
-      }
-
-      var cond = segs.join(' && ');
-
-      if ('gt' in val && 'lt' in val
-        || 'gt' in val && 'lte' in val
-        || 'gte' in val && 'lt' in val
-        || 'gte' in val && 'lte' in val
-      ) {
-        check('if (' + cond + ') throw new Error(' + _key + ' + "not equal")');
-      } else if ('gt' in val || 'gte' in val) {
-        check('if (' + cond + ') throw new Error(' + _key + ' + "too high")');
-      } else {
-        check('if (' + cond + ') throw new Error(' + _key + ' + "too low")');
-      }
+      check(
+        'if (ltgt.contains(' + stringify(val) + ', arg)) throw new Error(' + _key + ' + "in range " + ' + quote(stringify(val)) + ')' 
+      );
     }
   });
 

@@ -129,7 +129,7 @@ test('len', function(t) {
     fn({ title: 'a' });
   } catch(err) {
     t.ok(err);
-    t.equal(err.message, 'title too short');
+    t.equal(err.message, 'title length not in range {\"gte\":3}');
   }
 });
 
