@@ -126,7 +126,6 @@ test('len', function(t) {
     var fn = v.rules({
       'title': v.len({ gte: 3 })
     });
-    console.log(fn.src())
     fn({ title: 'a' });
   } catch(err) {
     t.ok(err);
