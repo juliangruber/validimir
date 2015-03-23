@@ -10,7 +10,7 @@ Create validation functions.
 ## Idea
 
 * compile validation functions once, run them on every request
-* handle string ranges, so works well with LevelDBs
+* handle string ranges through [ltgt](https://npm.im/ltgt), so works well with LevelDBs
 
 ```js
 v.equal({ gte: 'post!', lte: 'post!~' })('post!1337');
