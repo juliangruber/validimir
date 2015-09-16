@@ -1,226 +1,30 @@
 
 # validimir
 
-Create validation functions.
+Minimalistic validation functions with a fluid api, to be used with flexible model layers or as standalone.
 
 [![build status](https://secure.travis-ci.org/juliangruber/validimir.png)](http://travis-ci.org/juliangruber/validimir)
 
 [![testling badge](https://ci.testling.com/juliangruber/validimir.png)](https://ci.testling.com/juliangruber/validimir)
 
-## Idea
-
-* compile validation functions once, run them on every request
-* handle string ranges through [ltgt](https://npm.im/ltgt), so works well with LevelDBs
-
-```js
-v.equal({ gte: 'post!', lte: 'post!~' })('post!1337');
-```
-
-* fluent api, so it's flexible and pleasant
-
-```js
-v.len(3).match(/^foo$/).notEqual('bar').string()('foo');
-```
-
-* on error, throw
-
-This is the error output from
-
-```js
-v.equal({ gt: 3 })(2);
-```
-
-```bash
-if (arg <= 3) throw new Error("too low")
-                    ^
-Error: too low
-```
-
-## Usage
+## Example
 
 ```js
 var v = require('validimir');
 
-test('number', function(t) {
-  v.number()(13);
-  t.throws(function() { v.number()('13') });
-  t.end();
-});
+var fn = v().object().hasKey('foo').each(v().string());
 
-test('string', function(t) {
-  v.string()('13');
-  t.throws(function() { v.string()(13) });
-  t.end();
-});
+fn({ foo: 'bar', beep: 'boop' });
+// => { errors: [] }
 
-test('boolean', function(t) {
-  v.boolean()(true);
-  t.throws(function() { v.boolean()() });
-  t.end();
-});
+fn({ foo: 'bar', beep: 2 });
+// => { errors: [{ value: 2, operator: 'string', actual: 'number' }] }
 
-test('object', function(t) {
-  v.object()({});
-  t.throws(function() { v.object()(null) });
-  t.throws(function() { v.object()('foo') });
-  t.end();
-});
-
-test('array', function(t) {
-  v.array()([]);
-  t.throws(function() { v.array()({}) });
-  t.end();
-});
-
-test('buffer', function(t) {
-  v.buffer()(new Buffer([]));
-  t.throws(function() { v.buffer()({}) });
-  t.end();
-});
-
-test('equal', function(t) {
-  v.equal('foo')('foo');
-  v.equal(4)(4);
-
-  v.equal({ gt: 4 })(6);
-  v.equal({ gt: 'a' })('b');
-
-  v.equal({ lt: 7 })(6);
-  v.equal({ lt: 'b' })('a');
-
-  t.throws(function() { v.equal('1')(1) });
-  t.throws(function() { v.equal({ gt: 4 })(3) });
-  t.throws(function() { v.equal({ gt: 'b' })('a') });
-  t.end();
-});
-
-test('notEqual', function(t) {
-  v.notEqual('1')(1);
-  v.notEqual({ gt: 3, lt: 5 })(6);
-  t.throws(function() { v.notEqual('1')('1') });
-  t.end();
-});
-
-test('match', function(t) {
-  v.match(/foo/)('foo');
-  t.throws(function() { v.match(/foo/)('f') });
-  t.end();
-});
-
-test('notMatch', function(t) {
-  v.notMatch(/foo/)('f');
-  t.throws(function() { v.notMatch(/foo/)('foo') });
-  t.end();
-});
-
-test('hasKey', function(t) {
-  v.hasKey('a')({a:'b'});
-  t.throws(function() { v.hasKey('b')({a:'b'}) });
-  t.end();
-});
-
-test('len', function(t) {
-  v.len(13)('aaaaaaaaaaaaa');
-  v.len({ gt: 3 })('aaaaa');
-  v.len({ lte: 10 })('aaaaa');
-  v.len({ gt: 3, lte: 10 })('aaaaa');
-
-  t.throws(function() {
-    v.len(13)('a');
-    v.len({ gt: 3 })('a');
-    v.len({ lte: 3 })('aaaaa');
-    v.len({ gt: 3, lte: 10 })('a');
-  });
-
-  t.end();
-});
-
-test('of', function(t) {
-  v.of(['foo', 'bar'])('foo');
-  t.throws(function() { v.of(['foo'])('bar') });
-  t.end();
-});
-
-test('notOf', function(t) {
-  v.notOf(['foo', 'bar'])('baz');
-  t.throws(function() { v.notOf(['foo'])('foo') });
-  t.end();
-});
-
-test('integration', function(t) {
-  v.of(['foo']).len(3).match(/^foo$/)
-  .notEqual('bar').equal('foo').string()('foo');
-
-  t.ok(true);
-  t.end();
-});
-
-test('rules', function(t) {
-  var validate = v.rules({
-    'string': v.string(),
-    'number': v.number()
-  });
-
-  validate({ string: 'string', number: 12 });
-  t.throws(function() { validate({ string: 13 }) });
-  t.throws(function() { validate({ string: 'string' }) });
-
-  t.end();
-});
-
-test('value', function(t) {
-  var validate = v.rules({
-    'a': v.string().equal(v.value('b')),
-    'b': v.string(),
-    'arr': v.array().each(v.rules({
-      'a': v.equal(v.value('c')),
-      'b': v.equal(v.value('../../a')),
-      'c': v.equal('c')
-    }))
-  });
-
-  validate({
-    a: 'foo',
-    b: 'foo',
-    arr: [{
-      a: 'c',
-      b: 'foo',
-      c: 'c'
-    }]
-  });
-
-  t.throws(function() {
-    validate({
-      a: 'foo',
-      b: 'bar',
-      arr: [{ a: 'c', b: 'bar', c: 'c' }]
-    });
-  });
-
-  t.end();
-});
-
-test('each', function(t) {
-  var validate = v.each(v.string());
-
-  validate(['foo', 'bar']);
-  validate({ foo: 'foo', bar: 'bar' })
-  t.throws(function() { validate(['foo', 13]) });
-  t.throws(function() { validate({ foo: 13 }) });
-
-  t.end();
-});
-
-test('index', function(t) {
-  var validate = v.each(v.equal(v.index()));
-
-  validate([0, 1]);
-  validate({ foo: 'foo', bar: 'bar' })
-  t.throws(function() { validate([0, 2]) });
-  t.throws(function() { validate({ foo: 'bar' }) });
-
-  t.end();
-});
+fn({ beep: 2 });
+// => { errors: [
+//      { value: 2, operator: 'string', actual: 'number' },
+//      { value: { beep: 2 }, operator: 'hasKey', excepted: 'foo' }
+//     ]}
 ```
 
 ## Installation
@@ -230,6 +34,34 @@ With [npm](https://npmjs.org) do:
 ```bash
 npm install validimir
 ```
+
+## API
+
+### v()
+
+### .number()
+### .string()
+### .boolean()
+### .object()
+### .array()
+### .buffer()
+
+### .equal(value)
+### .notEqual(value)
+
+### .match(reg)
+### .notMatch(reg)
+
+### .hasKey(key)
+### .len(length)
+
+### .of(array)
+### .notOf(array)
+
+### .each(fn)
+
+### .valid()
+### .errors
 
 ## License
 
