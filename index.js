@@ -151,12 +151,12 @@ module.exports = function V(){
   };
 
   v.each = function(fn){
-    checks.push(function(arr){
+    checks.push(function(o){
       var errors = [];
-      for (var i = 0; i < arr.length; i++) {
-        var errs = fn(arr[i]).errors;
+      Object.keys(o).forEach(function(key){
+        var errs = fn(o[key]).errors;
         errs.forEach(function(err) { errors.push(err) });
-      }
+      });
       if (errors.length) return errors;
     });
     return v;

@@ -2,12 +2,16 @@ var v = require('..');
 var test = require('tape');
 
 test('each', function(t) {
-  var validate = v.each(v.string());
+  var validate = v().each(v().string());
 
-  validate(['foo', 'bar']);
-  validate({ foo: 'foo', bar: 'bar' })
-  t.throws(function() { validate(['foo', 13]) });
-  t.throws(function() { validate({ foo: 13 }) });
+  t.deepEqual(validate(['foo', 'bar']).errors, []);
+  t.deepEqual(validate({ foo: 'foo', bar: 'bar' }).errors, []);
+  t.deepEqual(validate(['foo', 13]).errors, [
+    { value: 13, operator: 'string', actual: 'number' }
+  ]);
+  t.deepEqual(validate({ foo: 13 }).errors, [
+    { value: 13, operator: 'string', actual: 'number' }  
+  ]);
 
   t.end();
 });
