@@ -39,6 +39,8 @@ npm install validimir
 
 ### v()
 
+  Create a new validation function.
+
 ### .number()
 ### .string()
 ### .boolean()
@@ -46,22 +48,42 @@ npm install validimir
 ### .array()
 ### .buffer()
 
+  Assert value is of given type. Types are exact, so `.array()` won't accept an object and vice verse.
+
 ### .equal(value)
 ### .notEqual(value)
+
+  Assert value is (or not) equal to `value`. [ltgt](http://npmjs.org/package/ltgt) ranges can be used as well.
 
 ### .match(reg)
 ### .notMatch(reg)
 
+  Assert value matches (or doesn't match) regular expression `reg`.
+
 ### .hasKey(key)
+
+  Assert object value has key `key`.
+
 ### .len(length)
+
+  Assert value is of length `length`. [ltgt](http://npmjs.org/package/ltgt) ranges can be used as well.
 
 ### .of(array)
 ### .notOf(array)
 
+  Assert value can (or can't) be found in `array`.
+
 ### .each(fn)
 
-### .valid()
+  Assert each of value - no matter whether it's an array or object - passes `fn` with should be a function returned by validimir or an api compatible module.
+
 ### .errors
+
+  Array of errors objects found validating value.
+
+### .valid()
+
+  Helper function asserting `.errors.length === 0`.
 
 ## License
 
