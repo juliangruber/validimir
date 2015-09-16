@@ -87,8 +87,7 @@ module.exports = function V(){
     checks.push(function(v){
       if (reg.test(v)) return {
         value: v,
-        operator: 'notMatch',
-        expected: reg
+        operator: 'notMatch'
       };
     });
     return v;
