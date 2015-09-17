@@ -5,8 +5,6 @@ Minimalistic validation functions with a fluid api, to be used with flexible mod
 
 [![build status](https://secure.travis-ci.org/juliangruber/validimir.png)](http://travis-ci.org/juliangruber/validimir)
 
-[![testling badge](https://ci.testling.com/juliangruber/validimir.png)](https://ci.testling.com/juliangruber/validimir)
-
 ## Example
 
 ```js
