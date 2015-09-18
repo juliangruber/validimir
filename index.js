@@ -165,5 +165,7 @@ module.exports = function V(){
     return errors.length == 0;
   };
 
+  v.checks = checks;
+
   return v;
 };
