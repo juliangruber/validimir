@@ -18,7 +18,7 @@ module.exports = function V(){
     return { errors: errors };
   };
 
-  var types = ['number', 'string', 'boolean', 'object', 'array', 'buffer'];
+  var types = 'number string boolean object array buffer date'.split(' ');
   types.forEach(function(t){
     v[t] = function(){
       checks.push(function(v){

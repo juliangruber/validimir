@@ -45,8 +45,9 @@ npm install validimir
 ### .object()
 ### .array()
 ### .buffer()
+### .date()
 
-  Assert value is of given type. Types are exact, so `.array()` won't accept an object and vice verse.
+  Assert value is of given type. Types are exact, so `.array()` won't accept an object and vice versa.
 
 ### .equal(value)
 ### .notEqual(value)

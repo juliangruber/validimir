@@ -50,6 +50,13 @@ test('buffer', function(t) {
   t.end();
 });
 
+test('date', function(t) {
+  t.deepEqual(v().date()(new Date).errors, []);
+  t.deepEqual(v().date()({}).errors, [
+    { value: {}, operator: 'date', actual: 'object' }  
+  ]);
+  t.end();
+});
 
 test('equal', function(t) {
   t.deepEqual(v().equal('foo')('foo').errors, []);
