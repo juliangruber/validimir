@@ -78,11 +78,21 @@ npm install validimir
 
 ### .errors
 
-  Array of errors objects found validating value.
+  Array of errors objects found validating value. Accessible on the result of calling the validation function, e.g.
+
+```js
+var v = require('validimir');
+v().number()(13).errors
+```
 
 ### .valid()
 
-  Helper function asserting `.errors.length === 0`.
+  Helper function asserting `.errors.length === 0`. Accessible on the result of calling the validation function, e.g.
+
+```js
+var v = require('validimir');
+v().string()('13').valid()
+```
 
 ## License
 

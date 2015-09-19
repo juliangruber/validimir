@@ -3,9 +3,11 @@ var v = require('..');
 
 test('number', function(t) {
   t.deepEqual(v().number()(13).errors, []);
+  t.equal(v().number()(13).valid(), true);
   t.deepEqual(v().number()('13').errors, [
     { value: '13', operator: 'number', actual: 'string' }
   ]);
+  t.equal(v().number()('13').valid(), false);
   t.end();
 });
 

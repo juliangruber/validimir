@@ -15,7 +15,12 @@ module.exports = function V(){
       if (!Array.isArray(errs)) errs = [errs];
       errs.forEach(function(err){ errors.push(err) });
     });
-    return { errors: errors };
+    return {
+      errors: errors,
+      valid: function() {
+        return errors.length == 0;
+      }
+    };
   };
 
   var types = 'number string boolean object array buffer date'.split(' ');
@@ -159,10 +164,6 @@ module.exports = function V(){
       if (errors.length) return errors;
     });
     return v;
-  };
-
-  v.valid = function(){
-    return errors.length == 0;
   };
 
   return v;
