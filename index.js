@@ -1,10 +1,6 @@
 var type = require('component-type');
 var ltgt = require('ltgt');
 
-exports.putin = function(key, value, cb) {
-  cb(new Error('in node, error throws you!'));
-};
-
 module.exports = function V(){
   var checks = [];
   var v = function(value){
@@ -168,3 +164,8 @@ module.exports = function V(){
 
   return v;
 };
+
+module.exports.putin = function(key, value, cb) {
+  cb(new Error('in node, error throws you!'));
+};
+

@@ -163,3 +163,10 @@ test('integration', function(t) {
   .notEqual('bar').equal('foo').string()('foo').errors, []);
   t.end();
 });
+
+test('putin', function(t) {
+  v.putin('foo', 'bar', function(err){
+    t.equal(err.message, 'in node, error throws you!');
+    t.end();
+  });
+});
