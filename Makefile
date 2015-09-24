@@ -1,7 +1,7 @@
 
 ISTANBUL=node_modules/.bin/istanbul
 TAPE=node_modules/.bin/tape
-COVERALLS=node_modules/.bin/COVERALLS
+COVERALLS=node_modules/.bin/coveralls
 
 test:
 	@$(TAPE) test/*.js
