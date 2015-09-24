@@ -4,6 +4,7 @@
 Minimalistic validation functions with a fluid api, to be used with flexible model layers or as standalone.
 
 [![build status](https://secure.travis-ci.org/juliangruber/validimir.png)](http://travis-ci.org/juliangruber/validimir)
+[![Dependency Status](https://david-dm.org/juliangruber/validimir.svg)](https://david-dm.org/juliangruber/validimir)
 
 ## Example
 
