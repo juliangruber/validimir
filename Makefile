@@ -2,5 +2,8 @@
 test:
 	@node_modules/.bin/tape test/*.js
 
-.PHONY: test
+cover:
+	@node_modules/.bin/istanbul cover test/*.js
+
+.PHONY: test cover
 
