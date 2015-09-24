@@ -93,6 +93,9 @@ test('notEqual', function(t) {
   t.deepEqual(v().notEqual('1')('1').errors, [
     { value: '1', operator: 'notEqual' }
   ]);
+  t.deepEqual(v().notEqual({ gt: 3, lt: 5 })(4).errors, [
+    { value: 4, operator: 'notEqual' }
+  ]);
   t.end();
 });
 
