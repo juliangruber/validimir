@@ -1,9 +1,11 @@
 
+TAPE=node_modules/.bin/tape
+
 test:
-	@node_modules/.bin/tape test/*.js
+	@$(TAPE) test/*.js
 
 cover:
-	@node_modules/.bin/istanbul cover test/*.js
+	@node_modules/.bin/istanbul cover $(TAPE) -- test/*.js
 
 .PHONY: test cover
 
