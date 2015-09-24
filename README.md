@@ -5,6 +5,7 @@ Minimalistic validation functions with a fluid api, to be used with flexible mod
 
 [![build status](https://secure.travis-ci.org/juliangruber/validimir.png)](http://travis-ci.org/juliangruber/validimir)
 [![Dependency Status](https://david-dm.org/juliangruber/validimir.svg)](https://david-dm.org/juliangruber/validimir)
+[![Coverage Status](https://coveralls.io/repos/juliangruber/validimir/badge.svg?branch=master&service=github)](https://coveralls.io/github/juliangruber/validimir?branch=master)
 
 ## Example
 
