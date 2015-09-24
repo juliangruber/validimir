@@ -60,6 +60,14 @@ test('date', function(t) {
   t.end();
 });
 
+test('email', function(t) {
+  t.deepEqual(v().email()('foo@bar.com').errors, []);
+  t.deepEqual(v().email()('foo@bar').errors, [
+    { value: 'foo@bar', operator: 'email' }
+  ]);
+  t.end();
+});
+
 test('equal', function(t) {
   t.deepEqual(v().equal('foo')('foo').errors, []);
   t.deepEqual(v().equal(4)(4).errors, []);
@@ -173,3 +181,4 @@ test('putin', function(t) {
     t.end();
   });
 });
+

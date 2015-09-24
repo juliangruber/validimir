@@ -51,6 +51,14 @@ npm install validimir
 
   Assert value is of given type. Types are exact, so `.array()` won't accept an object and vice versa.
 
+### .email()
+
+  Assert value is a valid email. The regular expression used is:
+
+```
+/^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/
+```
+
 ### .equal(value)
 ### .notEqual(value)
 
