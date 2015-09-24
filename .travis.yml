@@ -5,3 +5,4 @@ node_js:
   - "iojs"
 after_success:
   - make coveralls
+sudo: false
