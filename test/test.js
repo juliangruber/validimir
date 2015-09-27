@@ -273,7 +273,12 @@ test('of', function(t) {
 test('notOf', function(t) {
   t.deepEqual(v().notOf(['foo', 'bar'])('baz').errors, []);
   t.deepEqual(v().notOf(['foo'])('foo').errors, [
-    { value: 'foo', operator: 'notOf', expected: ['foo'] }
+    {
+      value: 'foo',
+      operator: 'notOf',
+      expected: ['foo'],
+      message: 'Expected "foo" not to be of ["foo"]'
+    }
   ]);
   t.end();
 });
