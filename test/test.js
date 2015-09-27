@@ -201,7 +201,12 @@ test('notMatch', function(t) {
 test('hasKey', function(t) {
   t.deepEqual(v().hasKey('a')({a:'b'}).errors, []);
   t.deepEqual(v().hasKey('b')({a:'b'}).errors, [
-    { value: { a: 'b' }, operator: 'hasKey', expected: 'b' }
+    {
+      value: { a: 'b' },
+      operator: 'hasKey',
+      expected: 'b',
+      message: 'Expected {"a":"b"} to have key b'
+    }
   ]);
   t.end();
 });

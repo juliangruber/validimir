@@ -115,12 +115,13 @@ module.exports = function V(){
     return v;
   };
 
-  v.hasKey = function(k){
+  v.hasKey = function(k, msg){
     checks.push(function(o){
       if (type(o) != 'object' || !(k in o)) return {
         value: o,
         operator: 'hasKey',
-        expected: k
+        expected: k,
+        message: msg || fmt('Expected %j to have key %s', o, k)
       };
     });
     return v;
