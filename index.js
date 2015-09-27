@@ -153,12 +153,13 @@ module.exports = function V(){
     return v;
   };
 
-  v.of = function(arr){
+  v.of = function(arr, msg){
     checks.push(function(v){
       if (arr.indexOf(v) == -1) return {
         value: v,
         operator: 'of',
-        expected: arr
+        expected: arr,
+        message: msg || fmt('Expected %j to be of %j', v, arr)
       };
     });
     return v;

@@ -260,7 +260,12 @@ test('len', function(t) {
 test('of', function(t) {
   t.deepEqual(v().of(['foo', 'bar'])('foo').errors, []);
   t.deepEqual(v().of(['foo'])('bar').errors, [
-    { value: 'bar', operator: 'of', expected: ['foo'] }
+    {
+      value: 'bar',
+      operator: 'of',
+      expected: ['foo'],
+      message: 'Expected "bar" to be of ["foo"]'
+    }
   ]);
   t.end();
 });
