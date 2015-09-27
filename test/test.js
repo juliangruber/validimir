@@ -157,10 +157,18 @@ test('notEqual', function(t) {
   t.deepEqual(v().notEqual('1')(1).errors, []);
   t.deepEqual(v().notEqual({ gt: 3, lt: 5 })(6).errors, []);
   t.deepEqual(v().notEqual('1')('1').errors, [
-    { value: '1', operator: 'notEqual' }
+    {
+      value: '1',
+      operator: 'notEqual',
+      message: 'Expected "1" not to equal "1"'
+    }
   ]);
   t.deepEqual(v().notEqual({ gt: 3, lt: 5 })(4).errors, [
-    { value: 4, operator: 'notEqual' }
+    {
+      value: 4,
+      operator: 'notEqual',
+      message: 'Expected a value outside range (3,5)'
+    }
   ]);
   t.end();
 });
