@@ -70,12 +70,14 @@ module.exports = function V(){
     return v;
   };
 
-  v.notEqual = function(notExpected){
+  v.notEqual = function(notExpected, msg){
     if (typeof notExpected == 'object') {
       checks.push(function(v){
         if (ltgt.contains(notExpected, v)) return {
           value: v,
           operator: 'notEqual',
+          message: msg
+            || fmt('Expected a value outside range %s', toInterval(notExpected))
         };
       });
     } else {
@@ -83,6 +85,7 @@ module.exports = function V(){
         if (v === notExpected) return {
           value: v,
           operator: 'notEqual',
+          message: msg || fmt('Expected %j not to equal %j', v, notExpected)
         };
       });
     }
