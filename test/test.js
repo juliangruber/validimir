@@ -189,7 +189,11 @@ test('match', function(t) {
 test('notMatch', function(t) {
   t.deepEqual(v().notMatch(/foo/)('f').errors, []);
   t.deepEqual(v().notMatch(/foo/)('foo').errors, [
-    { value: 'foo', operator: 'notMatch' }
+    {
+      value: 'foo',
+      operator: 'notMatch',
+      message: 'Expected "foo" not to match /foo/'
+    }
   ]);
   t.end();
 });

@@ -104,11 +104,12 @@ module.exports = function V(){
     return v;
   };
 
-  v.notMatch = function(reg){
+  v.notMatch = function(reg, msg){
     checks.push(function(v){
       if (reg.test(v)) return {
         value: v,
-        operator: 'notMatch'
+        operator: 'notMatch',
+        message: msg || fmt('Expected %j not to match %s', v, reg)
       };
     });
     return v;
