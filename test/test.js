@@ -5,7 +5,12 @@ test('number', function(t) {
   t.deepEqual(v().number()(13).errors, []);
   t.equal(v().number()(13).valid(), true);
   t.deepEqual(v().number()('13').errors, [
-    { value: '13', operator: 'number', actual: 'string' }
+    {
+      value: '13',
+      operator: 'number',
+      actual: 'string',
+      message: 'Expected a number but got a string'
+    }
   ]);
   t.equal(v().number()('13').valid(), false);
   t.end();
@@ -14,7 +19,12 @@ test('number', function(t) {
 test('string', function(t) {
   t.deepEqual(v().string()('13').errors, []);
   t.deepEqual(v().string()(13).errors, [
-    { value: 13, operator: 'string', actual: 'number' }
+    {
+      value: 13,
+      operator: 'string',
+      actual: 'number',
+      message: 'Expected a string but got a number'
+    }
   ]);
   t.end();
 });
@@ -22,7 +32,12 @@ test('string', function(t) {
 test('boolean', function(t) {
   t.deepEqual(v().boolean()(true).errors, []);
   t.deepEqual(v().boolean()('true').errors, [
-    { value: 'true', operator: 'boolean', actual: 'string' }  
+    {
+      value: 'true',
+      operator: 'boolean',
+      actual: 'string',
+      message: 'Expected a boolean but got a string'
+    } 
   ]);
   t.end();
 });
@@ -30,16 +45,25 @@ test('boolean', function(t) {
 test('object', function(t) {
   t.deepEqual(v().object()({}).errors, []);
   t.deepEqual(v().object()('true').errors, [
-    { value: 'true', operator: 'object', actual: 'string' }  
+    {
+      value: 'true',
+      operator: 'object',
+      actual: 'string',
+      message: 'Expected a object but got a string'
+    } 
   ]);
   t.end();
 });
 
-
 test('array', function(t) {
   t.deepEqual(v().array()([]).errors, []);
   t.deepEqual(v().array()('true').errors, [
-    { value: 'true', operator: 'array', actual: 'string' }  
+    {
+      value: 'true',
+      operator: 'array',
+      actual: 'string',
+      message: 'Expected a array but got a string'
+    }
   ]);
   t.end();
 });
@@ -47,7 +71,12 @@ test('array', function(t) {
 test('buffer', function(t) {
   t.deepEqual(v().buffer()(new Buffer(0)).errors, []);
   t.deepEqual(v().buffer()({}).errors, [
-    { value: {}, operator: 'buffer', actual: 'object' }  
+    {
+      value: {},
+      operator: 'buffer',
+      actual: 'object',
+      message: 'Expected a buffer but got a object'
+    }
   ]);
   t.end();
 });
@@ -55,7 +84,12 @@ test('buffer', function(t) {
 test('date', function(t) {
   t.deepEqual(v().date()(new Date).errors, []);
   t.deepEqual(v().date()({}).errors, [
-    { value: {}, operator: 'date', actual: 'object' }  
+    {
+      value: {},
+      operator: 'date',
+      actual: 'object',
+      message: 'Expected a date but got a object'
+    } 
   ]);
   t.end();
 });
