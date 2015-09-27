@@ -117,18 +117,38 @@ test('equal', function(t) {
   t.deepEqual(v().equal({ lt: 'b' })('a').errors, []);
 
   t.deepEqual(v().equal(1)(2).errors, [
-    { value: 2, operator: 'equal', expected: 1 }
+    {
+      value: 2,
+      operator: 'equal',
+      expected: 1,
+      message: 'Expected 2 to equal 1'
+    }
   ]);
 
 
   t.deepEquals(v().equal('1')(1).errors, [
-    { value: 1, operator: 'equal', expected: '1' }  
+    {
+      value: 1,
+      operator: 'equal',
+      expected: '1',
+      message: 'Expected 1 to equal "1"'
+    } 
   ]);
   t.deepEquals(v().equal({ gt: 4 })(3).errors, [
-    { value: 3, operator: 'equal', expected: { gt: 4 } }  
+    {
+      value: 3,
+      operator: 'equal',
+      expected: { gt: 4 },
+      message: 'Expected a value in range (4,'
+    } 
   ]);
   t.deepEqual(v().equal({ gt: 'b' })('a').errors, [
-    { value: 'a', operator: 'equal', expected: { gt: 'b' } }
+    {
+      value: 'a',
+      operator: 'equal',
+      expected: { gt: 'b' },
+      message: 'Expected a value in range (b,'
+    }
   ]);
   t.end();
 });
