@@ -12,6 +12,14 @@ test('number', function(t) {
       message: 'Expected a number but got a string'
     }
   ]);
+  t.deepEqual(v().number('number')('13').errors, [
+    {
+      value: '13',
+      operator: 'number',
+      actual: 'string',
+      message: 'number'
+    }
+  ]);
   t.equal(v().number()('13').valid(), false);
   t.end();
 });
@@ -24,6 +32,14 @@ test('string', function(t) {
       operator: 'string',
       actual: 'number',
       message: 'Expected a string but got a number'
+    }
+  ]);
+  t.deepEqual(v().string('string')(13).errors, [
+    {
+      value: 13,
+      operator: 'string',
+      actual: 'number',
+      message: 'string'
     }
   ]);
   t.end();
@@ -39,6 +55,14 @@ test('boolean', function(t) {
       message: 'Expected a boolean but got a string'
     } 
   ]);
+  t.deepEqual(v().boolean('boolean')('true').errors, [
+    {
+      value: 'true',
+      operator: 'boolean',
+      actual: 'string',
+      message: 'boolean'
+    } 
+  ]);
   t.end();
 });
 
@@ -50,6 +74,14 @@ test('object', function(t) {
       operator: 'object',
       actual: 'string',
       message: 'Expected a object but got a string'
+    } 
+  ]);
+  t.deepEqual(v().object('object')('true').errors, [
+    {
+      value: 'true',
+      operator: 'object',
+      actual: 'string',
+      message: 'object'
     } 
   ]);
   t.end();
@@ -65,6 +97,14 @@ test('array', function(t) {
       message: 'Expected a array but got a string'
     }
   ]);
+  t.deepEqual(v().array('array')('true').errors, [
+    {
+      value: 'true',
+      operator: 'array',
+      actual: 'string',
+      message: 'array'
+    }
+  ]);
   t.end();
 });
 
@@ -76,6 +116,14 @@ test('buffer', function(t) {
       operator: 'buffer',
       actual: 'object',
       message: 'Expected a buffer but got a object'
+    }
+  ]);
+  t.deepEqual(v().buffer('buffer')({}).errors, [
+    {
+      value: {},
+      operator: 'buffer',
+      actual: 'object',
+      message: 'buffer'
     }
   ]);
   t.end();
@@ -91,6 +139,14 @@ test('date', function(t) {
       message: 'Expected a date but got a object'
     } 
   ]);
+  t.deepEqual(v().date('date')({}).errors, [
+    {
+      value: {},
+      operator: 'date',
+      actual: 'object',
+      message: 'date'
+    } 
+  ]);
   t.end();
 });
 
@@ -101,6 +157,13 @@ test('email', function(t) {
       value: 'foo@bar',
       operator: 'email',
       message: 'Expected a valid email address'
+    }
+  ]);
+  t.deepEqual(v().email('email')('foo@bar').errors, [
+    {
+      value: 'foo@bar',
+      operator: 'email',
+      message: 'email'
     }
   ]);
   t.end();
@@ -124,6 +187,14 @@ test('equal', function(t) {
       message: 'Expected 2 to equal 1'
     }
   ]);
+  t.deepEqual(v().equal(1, 'equal')(2).errors, [
+    {
+      value: 2,
+      operator: 'equal',
+      expected: 1,
+      message: 'equal'
+    }
+  ]);
 
 
   t.deepEquals(v().equal('1')(1).errors, [
@@ -140,6 +211,14 @@ test('equal', function(t) {
       operator: 'equal',
       expected: { gt: 4 },
       message: 'Expected a value in range (4,'
+    } 
+  ]);
+  t.deepEquals(v().equal({ gt: 4 }, 'equal')(3).errors, [
+    {
+      value: 3,
+      operator: 'equal',
+      expected: { gt: 4 },
+      message: 'equal'
     } 
   ]);
   t.deepEqual(v().equal({ gt: 'b' })('a').errors, [
@@ -163,11 +242,25 @@ test('notEqual', function(t) {
       message: 'Expected "1" not to equal "1"'
     }
   ]);
+  t.deepEqual(v().notEqual('1', 'not equal')('1').errors, [
+    {
+      value: '1',
+      operator: 'notEqual',
+      message: 'not equal'
+    }
+  ]);
   t.deepEqual(v().notEqual({ gt: 3, lt: 5 })(4).errors, [
     {
       value: 4,
       operator: 'notEqual',
       message: 'Expected a value outside range (3,5)'
+    }
+  ]);
+  t.deepEqual(v().notEqual({ gt: 3, lt: 5 }, 'not equal')(4).errors, [
+    {
+      value: 4,
+      operator: 'notEqual',
+      message: 'not equal'
     }
   ]);
   t.end();
@@ -183,6 +276,14 @@ test('match', function(t) {
       message: 'Expected "f" to match /foo/'
     }
   ]);
+  t.deepEqual(v().match(/foo/, 'match')('f').errors, [
+    {
+      value: 'f',
+      operator: 'match',
+      expected: /foo/,
+      message: 'match'
+    }
+  ]);
   t.end();
 });
 
@@ -193,6 +294,13 @@ test('notMatch', function(t) {
       value: 'foo',
       operator: 'notMatch',
       message: 'Expected "foo" not to match /foo/'
+    }
+  ]);
+  t.deepEqual(v().notMatch(/foo/, 'not match')('foo').errors, [
+    {
+      value: 'foo',
+      operator: 'notMatch',
+      message: 'not match'
     }
   ]);
   t.end();
@@ -206,6 +314,14 @@ test('hasKey', function(t) {
       operator: 'hasKey',
       expected: 'b',
       message: 'Expected {"a":"b"} to have key b'
+    }
+  ]);
+  t.deepEqual(v().hasKey('b', 'has key')({a:'b'}).errors, [
+    {
+      value: { a: 'b' },
+      operator: 'hasKey',
+      expected: 'b',
+      message: 'has key'
     }
   ]);
   t.end();
@@ -226,6 +342,15 @@ test('len', function(t) {
       message: 'Expected "a" to have length 13'
     }
   ]);
+  t.deepEqual(v().len(13, 'len')('a').errors, [
+    {
+      value: 'a',
+      operator: 'len',
+      expected: 13,
+      actual: 1,
+      message: 'len'
+    }
+  ]);
   t.deepEqual(v().len({ gt: 3 })('a').errors, [
     {
       value: 'a',
@@ -233,6 +358,15 @@ test('len', function(t) {
       expected: { gt: 3 },
       actual: 1,
       message: 'Expected "a" to be of length (3,'
+    }
+  ]);
+  t.deepEqual(v().len({ gt: 3 }, 'len')('a').errors, [
+    {
+      value: 'a',
+      operator: 'len',
+      expected: { gt: 3 },
+      actual: 1,
+      message: 'len'
     }
   ]);
   t.deepEqual(v().len({ lte: 3 })('aaaaa').errors, [
@@ -267,6 +401,14 @@ test('of', function(t) {
       message: 'Expected "bar" to be of ["foo"]'
     }
   ]);
+  t.deepEqual(v().of(['foo'], 'of')('bar').errors, [
+    {
+      value: 'bar',
+      operator: 'of',
+      expected: ['foo'],
+      message: 'of'
+    }
+  ]);
   t.end();
 });
 
@@ -278,6 +420,14 @@ test('notOf', function(t) {
       operator: 'notOf',
       expected: ['foo'],
       message: 'Expected "foo" not to be of ["foo"]'
+    }
+  ]);
+  t.deepEqual(v().notOf(['foo'], 'not of')('foo').errors, [
+    {
+      value: 'foo',
+      operator: 'notOf',
+      expected: ['foo'],
+      message: 'not of'
     }
   ]);
   t.end();
