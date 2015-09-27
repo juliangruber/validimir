@@ -1,5 +1,6 @@
 var type = require('component-type');
 var ltgt = require('ltgt');
+var fmt = require('util').format;
 
 module.exports = function V(){
   var checks = [];
@@ -21,12 +22,13 @@ module.exports = function V(){
 
   var types = 'number string boolean object array buffer date'.split(' ');
   types.forEach(function(t){
-    v[t] = function(){
+    v[t] = function(msg){
       checks.push(function(v){
         if (type(v) != t) return {
           value: v,
           operator: t,
-          actual: type(v)
+          actual: type(v),
+          message: msg || fmt('Expected a %s but got a %s', t, type(v))
         };
       });
       return v;
