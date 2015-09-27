@@ -18,13 +18,28 @@ fn({ foo: 'bar', beep: 'boop' });
 // => { errors: [] }
 
 fn({ foo: 'bar', beep: 2 });
-// => { errors: [{ value: 2, operator: 'string', actual: 'number' }] }
+// => { errors: [{
+//      value: 2,
+//      operator: 'string',
+//      actual: 'number',
+//      message: 'Expected a string but got a number'
+//    }] }
 
 fn({ beep: 2 });
 // => { errors: [
-//      { value: 2, operator: 'string', actual: 'number' },
-//      { value: { beep: 2 }, operator: 'hasKey', excepted: 'foo' }
-//     ]}
+//      {
+//        value: 2,
+//        operator: 'string',
+//        actual: 'number',
+//        message: 'Expected a string but got a number'
+//      },
+//      {
+//        value: { beep: 2 },
+//        operator: 'hasKey',
+//        excepted: 'foo',
+//        message: 'Expected {"beep":2} to have key foo'
+//      }
+//    ]}
 ```
 
 ## Installation
@@ -37,21 +52,23 @@ npm install validimir
 
 ## API
 
+  Validimir will provide you with a useable `.message` for errors, or you can pass in your own to each method.
+
 ### v()
 
   Create a new validation function.
 
-### .number()
-### .string()
-### .boolean()
-### .object()
-### .array()
-### .buffer()
-### .date()
+### .number([message])
+### .string([message])
+### .boolean([message])
+### .object([message])
+### .array([message])
+### .buffer([message])
+### .date([message])
 
   Assert value is of given type. Types are exact, so `.array()` won't accept an object and vice versa.
 
-### .email()
+### .email([message])
 
   Assert value is a valid email. The regular expression used is:
 
@@ -59,26 +76,26 @@ npm install validimir
 /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/
 ```
 
-### .equal(value)
-### .notEqual(value)
+### .equal(value[, message])
+### .notEqual(value[, message])
 
   Assert value is (or not) equal to `value`. [ltgt](http://npmjs.org/package/ltgt) ranges can be used as well.
 
-### .match(reg)
-### .notMatch(reg)
+### .match(reg[, message])
+### .notMatch(reg[, message])
 
   Assert value matches (or doesn't match) regular expression `reg`.
 
-### .hasKey(key)
+### .hasKey(key[, message])
 
   Assert object value has key `key`.
 
-### .len(length)
+### .len(length[, message])
 
   Assert value is of length `length`. [ltgt](http://npmjs.org/package/ltgt) ranges can be used as well.
 
-### .of(array)
-### .notOf(array)
+### .of(array[, message])
+### .notOf(array[, message])
 
   Assert value can (or can't) be found in `array`.
 
