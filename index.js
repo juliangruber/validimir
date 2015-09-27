@@ -92,12 +92,13 @@ module.exports = function V(){
     return v;
   };
 
-  v.match = function(reg){
+  v.match = function(reg, msg){
     checks.push(function(v){
       if (!reg.test(v)) return {
         value: v,
         operator: 'match',
-        expected: reg
+        expected: reg,
+        message: msg || fmt('Expected %j to match %s', v, reg)
       };
     });
     return v;

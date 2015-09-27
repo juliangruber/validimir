@@ -176,7 +176,12 @@ test('notEqual', function(t) {
 test('match', function(t) {
   t.deepEqual(v().match(/foo/)('foo').errors, []);
   t.deepEqual(v().match(/foo/)('f').errors, [
-    { value: 'f', operator: 'match', expected: /foo/ }
+    {
+      value: 'f',
+      operator: 'match',
+      expected: /foo/,
+      message: 'Expected "f" to match /foo/'
+    }
   ]);
   t.end();
 });
