@@ -165,12 +165,13 @@ module.exports = function V(){
     return v;
   };
 
-  v.notOf = function(arr){
+  v.notOf = function(arr, msg){
     checks.push(function(v){
       if (arr.indexOf(v) > -1) return {
         value: v,
         operator: 'notOf',
-        expected: arr
+        expected: arr,
+        message: msg || fmt('Expected %j not to be of %j', v, arr)
       };
     });
     return v;
