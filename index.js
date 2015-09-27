@@ -127,14 +127,15 @@ module.exports = function V(){
     return v;
   };
 
-  v.len = function(l){
+  v.len = function(l, msg){
     if (typeof l == 'number') {
       checks.push(function(s){
         if (s.length != l) return {
           value: s,
           operator: 'len',
           expected: l,
-          actual: s.length
+          actual: s.length,
+          message: msg || fmt('Expected %j to have length %s', s, l)
         };
       });
     } else {
@@ -143,7 +144,9 @@ module.exports = function V(){
           value: s,
           operator: 'len',
           expected: l,
-          actual: s.length
+          actual: s.length,
+          message: msg
+            || fmt('Expected %j to be of length %s', s, toInterval(l))
         };
       });
     }
