@@ -35,11 +35,12 @@ module.exports = function V(){
     };
   });
 
-  v.email = function(){
+  v.email = function(msg){
     checks.push(function(e){
       if (!/^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/.test(e)) return {
         value: e,
-        operator: 'email'
+        operator: 'email',
+        message: msg || 'Expected a valid email address'
       };
     });
     return v;
