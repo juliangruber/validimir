@@ -33,6 +33,16 @@ module.exports = function V(){
     };
   });
 
+  v.email = function(){
+    checks.push(function(e){
+      if (!/^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/.test(e)) return {
+        value: e,
+        operator: 'email'
+      };
+    });
+    return v;
+  };
+
   v.equal = function(expected){
     if (typeof expected == 'object') {
       checks.push(function(v){
