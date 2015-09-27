@@ -218,16 +218,40 @@ test('len', function(t) {
   t.deepEqual(v().len({ gt: 3, lte: 10 })('aaaaa').errors, []);
 
   t.deepEqual(v().len(13)('a').errors, [
-    { value: 'a', operator: 'len', expected: 13, actual: 1 }
+    {
+      value: 'a',
+      operator: 'len',
+      expected: 13,
+      actual: 1,
+      message: 'Expected "a" to have length 13'
+    }
   ]);
   t.deepEqual(v().len({ gt: 3 })('a').errors, [
-    { value: 'a', operator: 'len', expected: { gt: 3 }, actual: 1 }
+    {
+      value: 'a',
+      operator: 'len',
+      expected: { gt: 3 },
+      actual: 1,
+      message: 'Expected "a" to be of length (3,'
+    }
   ]);
   t.deepEqual(v().len({ lte: 3 })('aaaaa').errors, [
-    { value: 'aaaaa', operator: 'len', expected: { lte: 3 }, actual: 5 }
+    {
+      value: 'aaaaa',
+      operator: 'len',
+      expected: { lte: 3 },
+      actual: 5,
+      message: 'Expected "aaaaa" to be of length ,3]'
+    }
   ]);
   t.deepEqual(v().len({ gt: 3, lte: 10 })('a').errors, [
-    { value: 'a', operator: 'len', expected: { gt: 3, lte: 10 }, actual: 1 }
+    {
+      value: 'a',
+      operator: 'len',
+      expected: { gt: 3, lte: 10 },
+      actual: 1,
+      message: 'Expected "a" to be of length (3,10]'
+    }
   ]);
 
   t.end();
