@@ -97,7 +97,11 @@ test('date', function(t) {
 test('email', function(t) {
   t.deepEqual(v().email()('foo@bar.com').errors, []);
   t.deepEqual(v().email()('foo@bar').errors, [
-    { value: 'foo@bar', operator: 'email' }
+    {
+      value: 'foo@bar',
+      operator: 'email',
+      message: 'Expected a valid email address'
+    }
   ]);
   t.end();
 });
