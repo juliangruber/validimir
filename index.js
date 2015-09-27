@@ -1,6 +1,7 @@
 var type = require('component-type');
 var ltgt = require('ltgt');
 var fmt = require('util').format;
+var toInterval = require('ltgt-to-interval');
 
 module.exports = function V(){
   var checks = [];
@@ -46,13 +47,14 @@ module.exports = function V(){
     return v;
   };
 
-  v.equal = function(expected){
+  v.equal = function(expected, msg){
     if (typeof expected == 'object') {
       checks.push(function(v){
         if (!ltgt.contains(expected, v)) return {
           value: v,
           operator: 'equal',
-          expected: expected
+          expected: expected,
+          message: msg || fmt('Expected a value in range %s', toInterval(expected))
         };
       });
     } else {
@@ -60,7 +62,8 @@ module.exports = function V(){
         if (v !== expected) return {
           value: v,
           operator: 'equal',
-          expected: expected
+          expected: expected,
+          message: msg || fmt('Expected %j to equal %j', v, expected)
         };
       });
     }
