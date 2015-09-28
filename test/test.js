@@ -434,8 +434,21 @@ test('notOf', function(t) {
 });
 
 test('integration', function(t) {
-  t.deepEqual(v().of(['foo']).len(3).match(/^foo$/)
-  .notEqual('bar').equal('foo').string()('foo').errors, []);
+  t.test(function(t){
+    t.deepEqual(v().of(['foo']).len(3).match(/^foo$/)
+    .notEqual('bar').equal('foo').string()('foo').errors, []);
+    t.end();
+  });
+  t.test(function(t){
+    var res = v()
+      .match(/\d/, 'A password must contain at least one number')
+      .match(/[a-z]/, 'A password must contain at least one lowercase letter')
+      .match(/[A-Z]/, 'A password must contain at least one uppercase letter')
+      .match(/!@#$%^&/, 'A passwould must contain at least one of the following "!@#$%^&"')
+      .len({ gte: 8, lte: 128 }, 'A password contain between 8 and 128 characters')('');
+    t.equal(res.errors.length, 5);
+    t.end();
+  });
   t.end();
 });
 
