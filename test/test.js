@@ -333,13 +333,13 @@ test('len', function(t) {
   t.deepEqual(v().len({ lte: 10 })('aaaaa').errors, []);
   t.deepEqual(v().len({ gt: 3, lte: 10 })('aaaaa').errors, []);
 
-  t.deepEqual(v().len(13)('a').errors, [
+  t.deepEqual(v().len(13)('').errors, [
     {
-      value: 'a',
+      value: '',
       operator: 'len',
       expected: 13,
-      actual: 1,
-      message: 'Expected "a" to have length 13'
+      actual: 0,
+      message: 'Expected "" to have length 13'
     }
   ]);
   t.deepEqual(v().len(13, 'len')('a').errors, [
