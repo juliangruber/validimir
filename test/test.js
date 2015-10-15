@@ -387,6 +387,12 @@ test('len', function(t) {
       message: 'Expected "a" to be of length (3,10]'
     }
   ]);
+  t.deepEqual(v().len(1)(undefined).errors, [
+    { value: undefined, operator: 'len', expected: 1, actual: 'no length property' }
+  ]);
+  t.deepEqual(v().len(1)(null).errors, [
+    { value: null, operator: 'len', expected: 1, actual: 'no length property' }
+  ]);
 
   t.end();
 });
