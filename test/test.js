@@ -396,7 +396,7 @@ test('len', function(t) {
   t.deepEqual(v().len({gt: 2})(undefined).errors, [
     { value: undefined, operator: 'len', expected: {gt: 2}, actual: 'no length property' }
   ]);
-  t.deepEqual(v().len({gt : 2})(null).errors, [
+  t.deepEqual(v().len({gt: 2})(null).errors, [
     { value: null, operator: 'len', expected: {gt: 2}, actual: 'no length property' }
   ]);
 
