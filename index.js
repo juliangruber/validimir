@@ -130,6 +130,12 @@ module.exports = function V(){
   v.len = function(l, msg){
     if (typeof l == 'number') {
       checks.push(function(s){
+        if (s == null) return {
+          value: s,
+          operator: 'len',
+          expected: l,
+          actual: 'no length property'
+        }
         if (s.length != l) return {
           value: s,
           operator: 'len',
@@ -140,6 +146,12 @@ module.exports = function V(){
       });
     } else {
       checks.push(function(s){
+        if (s == null) return {
+          value: s,
+          operator: 'len',
+          expected: l,
+          actual: 'no length property'
+        }
         if (!ltgt.contains(l, s.length)) return {
           value: s,
           operator: 'len',
