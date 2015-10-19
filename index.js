@@ -134,7 +134,8 @@ module.exports = function V(){
           value: s,
           operator: 'len',
           expected: l,
-          actual: 'no length property'
+          actual: 'no length property',
+          message: msg || fmt('Expected %j to have length %s', s, l)
         }
         if (s.length != l) return {
           value: s,
@@ -150,7 +151,9 @@ module.exports = function V(){
           value: s,
           operator: 'len',
           expected: l,
-          actual: 'no length property'
+          actual: 'no length property',
+          message: msg
+            || fmt('Expected %j to be of length %s', s, toInterval(l))
         }
         if (!ltgt.contains(l, s.length)) return {
           value: s,
