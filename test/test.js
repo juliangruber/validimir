@@ -53,7 +53,7 @@ test('boolean', function(t) {
       operator: 'boolean',
       actual: 'string',
       message: 'Expected a boolean but got a string'
-    } 
+    }
   ]);
   t.deepEqual(v().boolean('boolean')('true').errors, [
     {
@@ -61,7 +61,7 @@ test('boolean', function(t) {
       operator: 'boolean',
       actual: 'string',
       message: 'boolean'
-    } 
+    }
   ]);
   t.end();
 });
@@ -74,7 +74,7 @@ test('object', function(t) {
       operator: 'object',
       actual: 'string',
       message: 'Expected a object but got a string'
-    } 
+    }
   ]);
   t.deepEqual(v().object('object')('true').errors, [
     {
@@ -82,7 +82,7 @@ test('object', function(t) {
       operator: 'object',
       actual: 'string',
       message: 'object'
-    } 
+    }
   ]);
   t.end();
 });
@@ -137,7 +137,7 @@ test('date', function(t) {
       operator: 'date',
       actual: 'object',
       message: 'Expected a date but got a object'
-    } 
+    }
   ]);
   t.deepEqual(v().date('date')({}).errors, [
     {
@@ -145,7 +145,7 @@ test('date', function(t) {
       operator: 'date',
       actual: 'object',
       message: 'date'
-    } 
+    }
   ]);
   t.end();
 });
@@ -203,7 +203,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: '1',
       message: 'Expected 1 to equal "1"'
-    } 
+    }
   ]);
   t.deepEquals(v().equal({ gt: 4 })(3).errors, [
     {
@@ -211,7 +211,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: { gt: 4 },
       message: 'Expected a value in range (4,'
-    } 
+    }
   ]);
   t.deepEquals(v().equal({ gt: 4 }, 'equal')(3).errors, [
     {
@@ -219,7 +219,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: { gt: 4 },
       message: 'equal'
-    } 
+    }
   ]);
   t.deepEqual(v().equal({ gt: 'b' })('a').errors, [
     {
@@ -386,6 +386,18 @@ test('len', function(t) {
       actual: 1,
       message: 'Expected "a" to be of length (3,10]'
     }
+  ]);
+  t.deepEqual(v().len(1)(undefined).errors, [
+    { value: undefined, operator: 'len', expected: 1, actual: 'no length property' }
+  ]);
+  t.deepEqual(v().len(1)(null).errors, [
+    { value: null, operator: 'len', expected: 1, actual: 'no length property' }
+  ]);
+  t.deepEqual(v().len({gt: 2})(undefined).errors, [
+    { value: undefined, operator: 'len', expected: {gt: 2}, actual: 'no length property' }
+  ]);
+  t.deepEqual(v().len({gt: 2})(null).errors, [
+    { value: null, operator: 'len', expected: {gt: 2}, actual: 'no length property' }
   ]);
 
   t.end();
