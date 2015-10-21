@@ -44,7 +44,7 @@ module.exports = function V(){
 
   addCheck('email', function(msg){
     return function(e){
-      var match = /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/.test(e);
+      var match = type(e) == 'string' && /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/.test(e);
       if (!match) return {
         value: e,
         operator: 'email',
@@ -99,7 +99,7 @@ module.exports = function V(){
 
   addCheck('match', function(reg, msg){
     return function(v){
-      if (!reg.test(v)) return {
+      if (type(v) != 'string' || !reg.test(v)) return {
         value: v,
         operator: 'match',
         expected: reg,
@@ -110,7 +110,7 @@ module.exports = function V(){
 
   addCheck('notMatch', function(reg, msg){
     return function(v){
-      if (reg.test(v)) return {
+      if (type(v) != 'string' || reg.test(v)) return {
         value: v,
         operator: 'notMatch',
         message: msg || fmt('Expected %j not to match %s', v, reg)
@@ -195,6 +195,8 @@ module.exports.putin = function(key, value, cb) {
 };
 
 function getLength(obj){
-  return obj.length;
+  return obj !== null && typeof obj.length != 'undefined'
+    ? obj.length
+    : undefined;
 }
 

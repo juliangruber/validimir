@@ -166,6 +166,13 @@ test('email', function(t) {
       message: 'email'
     }
   ]);
+  t.deepEqual(v().email('email')(null).errors, [
+    {
+      value: null,
+      operator: 'email',
+      message: 'email'
+    }
+  ]);
   t.end();
 });
 
@@ -284,6 +291,14 @@ test('match', function(t) {
       message: 'match'
     }
   ]);
+  t.deepEqual(v().match(/foo/)(null).errors, [
+    {
+      value: null,
+      operator: 'match',
+      expected: /foo/,
+      message: 'Expected null to match /foo/'
+    }
+  ]);
   t.end();
 });
 
@@ -294,6 +309,13 @@ test('notMatch', function(t) {
       value: 'foo',
       operator: 'notMatch',
       message: 'Expected "foo" not to match /foo/'
+    }
+  ]);
+  t.deepEqual(v().notMatch(/foo/)(null).errors, [
+    {
+      value: null,
+      operator: 'notMatch',
+      message: 'Expected null not to match /foo/'
     }
   ]);
   t.deepEqual(v().notMatch(/foo/, 'not match')('foo').errors, [
@@ -322,6 +344,14 @@ test('hasKey', function(t) {
       operator: 'hasKey',
       expected: 'b',
       message: 'has key'
+    }
+  ]);
+  t.deepEqual(v().hasKey('b')(null).errors, [
+    {
+      value: null,
+      operator: 'hasKey',
+      expected: 'b',
+      message: 'Expected null to have key b'
     }
   ]);
   t.end();
@@ -385,6 +415,24 @@ test('len', function(t) {
       expected: { gt: 3, lte: 10 },
       actual: 1,
       message: 'Expected "a" to be of length (3,10]'
+    }
+  ]);
+  t.deepEqual(v().len(3)(null).errors, [
+    {
+      value: null,
+      operator: 'len',
+      expected: 3,
+      actual: undefined,
+      message: 'Expected null to have length 3'
+    }
+  ]);
+  t.deepEqual(v().len({ gt:3 })(null).errors, [
+    {
+      value: null,
+      operator: 'len',
+      expected: { gt: 3 },
+      actual: undefined,
+      message: 'Expected null to be of length (3,'
     }
   ]);
 
