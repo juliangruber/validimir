@@ -279,6 +279,14 @@ test('notEqual', function(t) {
       message: 'not equal'
     }
   ]);
+  t.deepEqual(v().notEqual(null)(null).errors, [
+    {
+      value: null,
+      operator: 'notEqual',
+      message: 'Expected null not to equal null'
+    }
+  ]);
+  t.deepEqual(v().notEqual(null)('a').errors, []);
   t.end();
 });
 
