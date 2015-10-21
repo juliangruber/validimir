@@ -77,7 +77,7 @@ module.exports = function V(){
   });
 
   addCheck('notEqual', function(notExpected, msg){
-    if (typeof notExpected == 'object') {
+    if (Object(notExpected) === notExpected) {
       return function(v){
         if (ltgt.contains(notExpected, v)) return {
           value: v,
