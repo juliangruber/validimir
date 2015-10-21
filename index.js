@@ -195,7 +195,7 @@ module.exports.putin = function(key, value, cb) {
 };
 
 function getLength(obj){
-  return obj !== null && typeof obj.length != 'undefined'
+  return obj != null && typeof obj.length != 'undefined'
     ? obj.length
     : undefined;
 }
