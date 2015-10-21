@@ -54,7 +54,7 @@ module.exports = function V(){
   });
 
   addCheck('equal', function(expected, msg){
-    if (typeof expected == 'object') {
+    if (Object(expected) === expected) {
       return function(v){
         if (!ltgt.contains(expected, v)) return {
           value: v,
