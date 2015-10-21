@@ -236,6 +236,15 @@ test('equal', function(t) {
       message: 'Expected a value in range (b,'
     }
   ]);
+  t.deepEqual(v().equal(null)('a').errors, [
+    {
+      value: 'a',
+      operator: 'equal',
+      expected: null,
+      message: 'Expected "a" to equal null'
+    }
+  ]);
+  t.deepEqual(v().equal(null)(null).errors, []);
   t.end();
 });
 
