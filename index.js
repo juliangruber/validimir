@@ -27,6 +27,7 @@ module.exports = function V(){
       return v;
     };
   };
+  v.addCheck = addCheck
 
   var types = 'number string boolean object array buffer date'.split(' ');
   types.forEach(function(t){
