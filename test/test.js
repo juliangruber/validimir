@@ -236,6 +236,15 @@ test('equal', function(t) {
       message: 'Expected a value in range (b,'
     }
   ]);
+  t.deepEqual(v().equal(null)('a').errors, [
+    {
+      value: 'a',
+      operator: 'equal',
+      expected: null,
+      message: 'Expected "a" to equal null'
+    }
+  ]);
+  t.deepEqual(v().equal(null)(null).errors, []);
   t.end();
 });
 
@@ -270,6 +279,14 @@ test('notEqual', function(t) {
       message: 'not equal'
     }
   ]);
+  t.deepEqual(v().notEqual(null)(null).errors, [
+    {
+      value: null,
+      operator: 'notEqual',
+      message: 'Expected null not to equal null'
+    }
+  ]);
+  t.deepEqual(v().notEqual(null)('a').errors, []);
   t.end();
 });
 
