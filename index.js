@@ -54,7 +54,7 @@ module.exports = function V(){
   });
 
   addCheck('equal', function(expected, msg){
-    if (Object(expected) === expected) {
+    if (isObj(expected)) {
       return function(v){
         if (!ltgt.contains(expected, v)) return {
           value: v,
@@ -77,7 +77,7 @@ module.exports = function V(){
   });
 
   addCheck('notEqual', function(notExpected, msg){
-    if (Object(notExpected) === notExpected) {
+    if (isObj(notExpected)) {
       return function(v){
         if (ltgt.contains(notExpected, v)) return {
           value: v,
@@ -200,3 +200,7 @@ function getLength(obj){
     : undefined;
 }
 
+
+function isObj(obj) {
+  return Object(obj) === obj
+}
