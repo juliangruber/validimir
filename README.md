@@ -103,39 +103,34 @@ npm install validimir
 
   Assert each of value - no matter whether it's an array or object - passes `fn` with should be a function returned by validimir or an api compatible module.
 
-### .addCheck(name, fn)
+### .custom(fn)
 
-  Add custom validator.
+  Add custom check.
 
-  This function adds a new validator `fn` under `name` and returns it to add it immediately if desired.
+  This function adds a new check function `fn`.
 
-  A validator is a function that gets two arguments:
-  - `expected`: The expected value. Used only on validators that need an `expected` value to check against.
-  - `msg` (optional): The error message to display in case of failure
-
-  The validation returns another function that gets the value to be checked, runs the check and returns either nothing (or any falsy value) on success or an error object on failure with the following properties:
+  A check function in validimir is a function that gets a value, tries to validate it and returns either nothing (or any falsy value) on success or an error object on failure. There are no strict requirements with regard to the error object, but to be consistent with other checks in validimir, it should have the following properties:
   - `value`: The value that didn't pass the validation
-  - `operator`: The name of the operator that failed. Ideally the same one as the `name` argument passed to `addCheck`)
-  - `message`: Error messsage. Either a default value or the `msg` argument if passed
-  - `expected`: The expected value (if passed to the validator)
+  - `operator`: The name of the operator that failed
+  - `message`: Descriptive error messsage
+  - `expected`: The expected value, if any, depending on the check
 
   Example:
 
 ```js
 var v = require('validimir');
 var isIP = require('validator').isIP
-var fn = v()
-fn.addCheck('ip', function(msg) {
-  return function(value) {
-    if (!isIP(value)) {
-      return {
-        value: value,
-        operator: 'ip',
-        message: msg || 'Expected a valid IP address'
-      }
+var check = function(value) {
+  if (!isIP(value)) {
+    return {}
+    return {
+      value: value,
+      operator: 'ip',
+      message: 'Expected a valid IP address'
     }
   }
-})()
+}
+var fn = v().custom(check)
 
 fn('not an ip')
 // { errors:
