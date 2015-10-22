@@ -122,7 +122,6 @@ var v = require('validimir');
 var isIP = require('validator').isIP
 var check = function(value) {
   if (!isIP(value)) {
-    return {}
     return {
       value: value,
       operator: 'ip',
