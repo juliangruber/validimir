@@ -30,6 +30,13 @@ module.exports = function V(){
   };
   v.addCheck = addCheck
 
+
+  // Add custom validator
+  v.custom = function(fn) {
+    checks.push(fn);
+    return v;
+  };
+
   var types = 'number string boolean object array buffer date'.split(' ');
   types.forEach(function(t){
     addCheck(t, function(msg){
