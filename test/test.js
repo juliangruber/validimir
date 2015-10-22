@@ -426,6 +426,15 @@ test('len', function(t) {
       message: 'Expected null to have length 3'
     }
   ]);
+  t.deepEqual(v().len(3)(undefined).errors, [
+    {
+      value: undefined,
+      operator: 'len',
+      expected: 3,
+      actual: undefined,
+      message: 'Expected undefined to have length 3'
+    }
+  ]);
   t.deepEqual(v().len({ gt:3 })(null).errors, [
     {
       value: null,
@@ -433,6 +442,15 @@ test('len', function(t) {
       expected: { gt: 3 },
       actual: undefined,
       message: 'Expected null to be of length (3,'
+    }
+  ]);
+  t.deepEqual(v().len({ gt:3 })(undefined).errors, [
+    {
+      value: undefined,
+      operator: 'len',
+      expected: { gt: 3 },
+      actual: undefined,
+      message: 'Expected undefined to be of length (3,'
     }
   ]);
 
