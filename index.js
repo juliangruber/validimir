@@ -202,5 +202,5 @@ function getLength(obj){
 
 
 function isObj(obj) {
-  return Object(obj) === obj
+  return Object(obj) === obj;
 }
