@@ -26,9 +26,7 @@ module.exports = function V(){
       checks.push(check);
       return v;
     };
-    return v[op]
   };
-  v.addCheck = addCheck
 
 
   // Add custom validator
