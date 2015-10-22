@@ -507,3 +507,12 @@ test('putin', function(t) {
   });
 });
 
+
+test('custom', function(t) {
+  var trueCheck = function() {}
+  var falseCheck = function() { return 'Some error found' }
+
+  t.deepEqual(v().custom(trueCheck)(1).errors, [])
+  t.deepEqual(v().custom(falseCheck)(1).errors, ['Some error found'])
+  t.end()
+});
