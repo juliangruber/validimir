@@ -29,7 +29,6 @@ module.exports = function V(){
   };
 
 
-  // Add custom validator
   addCheck('custom', function(fn) {
     return fn;
   });
