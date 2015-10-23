@@ -53,7 +53,7 @@ test('boolean', function(t) {
       operator: 'boolean',
       actual: 'string',
       message: 'Expected a boolean but got a string'
-    } 
+    }
   ]);
   t.deepEqual(v().boolean('boolean')('true').errors, [
     {
@@ -61,7 +61,7 @@ test('boolean', function(t) {
       operator: 'boolean',
       actual: 'string',
       message: 'boolean'
-    } 
+    }
   ]);
   t.end();
 });
@@ -74,7 +74,7 @@ test('object', function(t) {
       operator: 'object',
       actual: 'string',
       message: 'Expected a object but got a string'
-    } 
+    }
   ]);
   t.deepEqual(v().object('object')('true').errors, [
     {
@@ -82,7 +82,7 @@ test('object', function(t) {
       operator: 'object',
       actual: 'string',
       message: 'object'
-    } 
+    }
   ]);
   t.end();
 });
@@ -137,7 +137,7 @@ test('date', function(t) {
       operator: 'date',
       actual: 'object',
       message: 'Expected a date but got a object'
-    } 
+    }
   ]);
   t.deepEqual(v().date('date')({}).errors, [
     {
@@ -145,7 +145,7 @@ test('date', function(t) {
       operator: 'date',
       actual: 'object',
       message: 'date'
-    } 
+    }
   ]);
   t.end();
 });
@@ -210,7 +210,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: '1',
       message: 'Expected 1 to equal "1"'
-    } 
+    }
   ]);
   t.deepEquals(v().equal({ gt: 4 })(3).errors, [
     {
@@ -218,7 +218,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: { gt: 4 },
       message: 'Expected a value in range (4,'
-    } 
+    }
   ]);
   t.deepEquals(v().equal({ gt: 4 }, 'equal')(3).errors, [
     {
@@ -226,7 +226,7 @@ test('equal', function(t) {
       operator: 'equal',
       expected: { gt: 4 },
       message: 'equal'
-    } 
+    }
   ]);
   t.deepEqual(v().equal({ gt: 'b' })('a').errors, [
     {
@@ -542,3 +542,12 @@ test('putin', function(t) {
   });
 });
 
+
+test('custom', function(t) {
+  var trueCheck = function() {};
+  var falseCheck = function() { return 'Some error found'; };
+
+  t.deepEqual(v().custom(trueCheck)(1).errors, []);
+  t.deepEqual(v().custom(falseCheck)(1).errors, ['Some error found']);
+  t.end();
+});

@@ -103,13 +103,50 @@ npm install validimir
 
   Assert each of value - no matter whether it's an array or object - passes `fn` with should be a function returned by validimir or an api compatible module.
 
+### .custom(fn)
+
+  Add custom check.
+
+  This function adds a new check function `fn`.
+
+  A check function in validimir is a function that gets a value, tries to validate it and returns either nothing (or any falsy value) on success or an error object on failure. There are no strict requirements with regard to the error object, but to be consistent with other checks in validimir, it should have the following properties:
+  - `value`: The value that didn't pass the validation
+  - `operator`: The name of the operator that failed
+  - `message`: Descriptive error messsage
+  - `expected`: The expected value, if any, depending on the check
+
+  Example:
+
+```js
+var v = require('validimir');
+var isIP = require('validator').isIP;
+var checkIP = function(value) {
+  if (!isIP(value)) {
+    return {
+      value: value,
+      operator: 'ip',
+      message: 'Expected a valid IP address'
+    }
+  }
+};
+var fn = v().custom(checkIP);
+
+fn('not an ip address').errors;
+// => [ { value: 'not an ip address',
+//        operator: 'ip',
+//        message: 'Expected a valid IP address' } ]
+
+fn('127.0.0.1').errors;
+// => []
+```
+
 ### .errors
 
   Array of errors objects found validating value. Accessible on the result of calling the validation function, e.g.
 
 ```js
 var v = require('validimir');
-v().number()(13).errors
+v().number()(13).errors;
 ```
 
 ### .valid()
@@ -118,7 +155,7 @@ v().number()(13).errors
 
 ```js
 var v = require('validimir');
-v().string()('13').valid()
+v().string()('13').valid();
 ```
 
 ## License

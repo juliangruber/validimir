@@ -28,6 +28,11 @@ module.exports = function V(){
     };
   };
 
+
+  addCheck('custom', function(fn) {
+    return fn;
+  });
+
   var types = 'number string boolean object array buffer date'.split(' ');
   types.forEach(function(t){
     addCheck(t, function(msg){
@@ -73,7 +78,7 @@ module.exports = function V(){
         };
       };
     }
-    
+
   });
 
   addCheck('notEqual', function(notExpected, msg){
