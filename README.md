@@ -131,13 +131,13 @@ var checkIP = function(value) {
 };
 var fn = v().custom(checkIP);
 
-// [ { value: 'not an ip address',
-//     operator: 'ip',
-//     message: 'Expected a valid IP address' } ]
 fn('not an ip address').errors;
+// => [ { value: 'not an ip address',
+//        operator: 'ip',
+//        message: 'Expected a valid IP address' } ]
 
-// []
 fn('127.0.0.1').errors;
+// => []
 ```
 
 ### .errors
