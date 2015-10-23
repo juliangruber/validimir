@@ -120,7 +120,7 @@ npm install validimir
 ```js
 var v = require('validimir');
 var isIP = require('validator').isIP
-var check = function(value) {
+var checkIP = function(value) {
   if (!isIP(value)) {
     return {
       value: value,
@@ -129,7 +129,7 @@ var check = function(value) {
     }
   }
 }
-var fn = v().custom(check)
+var fn = v().custom(checkIP)
 
 fn('not an ip')
 // { errors:
