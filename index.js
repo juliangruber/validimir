@@ -78,7 +78,7 @@ module.exports = function V(){
         };
       };
     }
-    
+
   });
 
   addCheck('notEqual', function(notExpected, msg){
