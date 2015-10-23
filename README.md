@@ -119,7 +119,7 @@ npm install validimir
 
 ```js
 var v = require('validimir');
-var isIP = require('validator').isIP
+var isIP = require('validator').isIP;
 var checkIP = function(value) {
   if (!isIP(value)) {
     return {
@@ -128,16 +128,16 @@ var checkIP = function(value) {
       message: 'Expected a valid IP address'
     }
   }
-}
-var fn = v().custom(checkIP)
+};
+var fn = v().custom(checkIP);
 
-fn('not an ip address').errors
 // [ { value: 'not an ip address',
 //     operator: 'ip',
 //     message: 'Expected a valid IP address' } ]
+fn('not an ip address').errors;
 
-fn('127.0.0.1').errors
 // []
+fn('127.0.0.1').errors;
 ```
 
 ### .errors
