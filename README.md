@@ -146,7 +146,7 @@ fn('127.0.0.1').errors;
 
 ```js
 var v = require('validimir');
-v().number()(13).errors
+v().number()(13).errors;
 ```
 
 ### .valid()
@@ -155,7 +155,7 @@ v().number()(13).errors
 
 ```js
 var v = require('validimir');
-v().string()('13').valid()
+v().string()('13').valid();
 ```
 
 ## License
