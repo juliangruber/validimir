@@ -105,15 +105,14 @@ npm install validimir
 
 ### .custom(fn)
 
-  Add custom check.
+  Add a custom check `fn`.
 
-  This function adds a new check function `fn`.
+  A function is expected to take a value, validate it synchronously and returns either `undefined` on success or a truthy error value on failure. In theory error values can be of any truthy type, but to be consistent with other checks in validimir it should be an object with the following properties:
 
-  A check function in validimir is a function that gets a value, tries to validate it and returns either nothing (or any falsy value) on success or an error object on failure. There are no strict requirements with regard to the error object, but to be consistent with other checks in validimir, it should have the following properties:
   - `value`: The value that didn't pass the validation
   - `operator`: The name of the operator that failed
-  - `message`: Descriptive error messsage
-  - `expected`: The expected value, if any, depending on the check
+  - `message`: A descriptive error messsage
+  - `expected`: The expected value, if any
 
   Example:
 
