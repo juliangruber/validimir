@@ -20,7 +20,7 @@
   "devDependencies": {
     "coveralls": "2.11.6",
     "istanbul": "0.4.1",
-    "tape": "4.2.2"
+    "tape": "4.3.0"
   },
   "keywords": [
     "curry",
