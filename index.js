@@ -192,6 +192,8 @@ module.exports = function V(){
     };
   });
 
+  v.checks = checks;
+
   return v;
 };
 
