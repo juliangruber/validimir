@@ -18,7 +18,7 @@
     "quote-unquote": "1.0.0"
   },
   "devDependencies": {
-    "coveralls": "2.11.6",
+    "coveralls": "2.11.8",
     "istanbul": "0.4.2",
     "tape": "4.4.0"
   },
