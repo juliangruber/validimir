@@ -12,7 +12,7 @@
     "test": "make test"
   },
   "dependencies": {
-    "component-type": "1.2.0",
+    "component-type": "1.2.1",
     "ltgt": "2.1.2",
     "ltgt-to-interval": "^1.0.0",
     "quote-unquote": "1.0.0"
