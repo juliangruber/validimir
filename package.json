@@ -18,8 +18,8 @@
     "quote-unquote": "1.0.0"
   },
   "devDependencies": {
-    "coveralls": "2.11.9",
-    "istanbul": "0.4.4",
+    "coveralls": "^2.11.11",
+    "istanbul": "^0.4.4",
     "tape": "^4.6.0"
   },
   "keywords": [
